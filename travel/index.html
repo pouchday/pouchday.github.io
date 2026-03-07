@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Travel | PouchDay</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <a href="/" class="logo">
+            <img src="/assets/images/logo.svg" alt="PouchDay Logo">
+        </a>
+
+        <button class="nav-toggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/shop/">Shop</a>
+            <a href="/travel/">Travel</a>
+            <a href="/donate/">Donate</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Current Logistics Status</h1>
+        <p>Check below to see if we have travelers heading to your destination.</p>
+
+        <section id="travel-locations" class="card-grid" style="margin-bottom: 2rem;">
+            <p>Loading status...</p>
+        </section>
+
+        <hr style="border: 0; border-top: 1px solid #ddd; margin: 2rem 0;">
+
+        <h2>Register a Trip</h2>
+        <p>Are you flying somewhere? Help us carry a package.</p>
+
+        <form action="https://formsubmit.co/pouchday-dev@proton.me" method="POST">
+            <input type="hidden" name="_subject" value="New Traveler Registration">
+            <input type="hidden" name="_next" value="http://localhost:3000/#socials-footer">
+
+            <div class="form-group">
+                <label>Destination City</label>
+                <input type="text" name="destination" placeholder="e.g. Sao Paulo" required>
+            </div>
+
+            <div class="form-group">
+                <label>Travel Date</label>
+                <input type="date" name="travel_date" required style="background: white;">
+            </div>
+
+            <div class="form-group">
+                <label>Luggage Capacity</label>
+                <select name="capacity">
+                    <option value="Small Item">I can take a small item</option>
+                    <option value="Extra Suitcase">I can check an extra bag</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Your Email</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Submit Travel Plans</button>
+        </form>
+    </main>
+
+    <footer id="socials-footer">
+        <p>Follow us for updates</p>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

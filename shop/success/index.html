@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | PouchDay</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <a href="/" class="logo">
+            <img src="/assets/images/logo.svg" alt="PouchDay Logo">
+        </a>
+        <button class="nav-toggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/shop/">Shop</a>
+            <a href="/travel/">Travel</a>
+            <a href="/donate/">Donate</a>
+        </nav>
+    </header>
+
+    <main style="text-align: center; padding-top: 3rem;">
+
+        <div style="font-size: 5rem; color: #5cb85c; margin-bottom: 1rem;">✓</div>
+
+        <h1>Submission Received!</h1>
+        <p>Your manifest has been sent to our logistics team.</p>
+
+        <div class="card" style="max-width: 400px; margin: 2rem auto; text-align: left;">
+            <p><strong>Order ID:</strong> <span id="display-id">Loading...</span></p>
+            <p><strong>Destination:</strong> <span id="display-dest">Loading...</span></p>
+            <p><strong>Weight:</strong> <span id="display-weight">Loading...</span></p>
+        </div>
+
+        <button onclick="downloadPDF()" class="btn-primary" style="max-width: 300px;">
+            Download Packing Slip (PDF)
+        </button>
+
+        <p style="margin-top: 2rem; color: #666;">
+            Please print this slip and tape it to your box.
+        </p>
+
+    </main>
+
+    <footer id="socials-footer">
+        <p>Follow us for updates</p>
+        <div style="margin-top: 10px;">
+            <a href="#">Instagram</a> | <a href="#">Facebook</a>
+        </div>
+    </footer>
+
+    <script>
+        // 2. Parse URL Parameters
+        const params = new URLSearchParams(window.location.search);
+        const orderId = params.get('id') || 'UNKNOWN';
+        const dest = params.get('dest') || 'Unknown';
+        const weight = params.get('weight') || '0';
+
+        // Display on screen
+        document.getElementById('display-id').textContent = orderId;
+        document.getElementById('display-dest').textContent = dest;
+        document.getElementById('display-weight').textContent = weight + ' lbs';
+
+        // 3. PDF Generation Function
+        async function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // -- Design the PDF --
+            doc.setFontSize(22);
+            doc.setTextColor(0, 48, 135); // Pan Am Blue
+            doc.text("Logistics Co - Packing Slip", 20, 20);
+
+            doc.setLineWidth(0.5);
+            doc.line(20, 25, 190, 25);
+
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+
+            doc.text(`Order UUID: ${orderId}`, 20, 40);
+            doc.text(`Destination: ${dest}`, 20, 50);
+            doc.text(`Box Weight: ${weight} lbs`, 20, 60);
+            doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 70);
+
+            // Add a box for "Warehouse Use Only"
+            doc.setDrawColor(0);
+            doc.rect(20, 90, 170, 40);
+            doc.text("Warehouse Use Only:", 25, 100);
+            doc.text("[ ] Verified Weight", 25, 115);
+            doc.text("[ ] Security Check", 100, 115);
+
+            // Save
+            doc.save(`Packing_Slip_${orderId}.pdf`);
+        }
+    </script>
+</body>
+
+</html>

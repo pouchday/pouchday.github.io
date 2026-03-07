@@ -1,0 +1,16 @@
+{
+    "locations": [
+        {
+            "city": "London",
+            "status": "Accepting Packages"
+        },
+        {
+            "city": "Tokyo",
+            "status": "Logistics Full"
+        },
+        {
+            "city": "Sao Paulo",
+            "status": "Accepting Packages"
+        }
+    ]
+}
