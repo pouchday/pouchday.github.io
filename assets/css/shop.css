@@ -1,0 +1,60 @@
+/* Shop page only */
+
+.item-row {
+    margin-top: 1rem;
+}
+
+.btn-add-item {
+    width: 100%;
+    min-height: 44px;
+    border: 2px solid color-mix(in srgb, var(--c-navy) 75%, white);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--c-navy);
+    font-weight: 800;
+    padding: 0.65rem 1rem;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
+}
+
+.item-input-row {
+    display: flex;
+    gap: 0.65rem;
+    align-items: center;
+}
+
+.item-input-row input[type="file"] {
+    flex: 1;
+}
+
+.btn-delete-item {
+    width: auto;
+    min-width: 92px;
+    min-height: 44px;
+    border: 1px solid #f2c2c2;
+    border-radius: 12px;
+    background: #fff5f5;
+    color: #9f1f1f;
+    font-size: 0.9rem;
+    font-weight: 800;
+    padding: 0 0.9rem;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
+}
+
+.btn-delete-item:active,
+.btn-add-item:active {
+    transform: translateY(1px);
+}
+
+@media (min-width: 768px) {
+    @media (hover: hover) {
+        .btn-add-item:hover {
+            background: #f5f8ff;
+            border-color: var(--c-navy);
+        }
+
+        .btn-delete-item:hover {
+            background: #ffe9e9;
+            border-color: #e8a4a4;
+        }
+    }
+}

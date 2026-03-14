@@ -1,0 +1,121 @@
+/* Home page only */
+
+body.has-hero {
+    padding-top: 0;
+}
+
+.hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-top: var(--header-height);
+    color: #fff;
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(1200px 600px at 20% 75%, rgba(35, 178, 228, 0.18), transparent 60%),
+        linear-gradient(155deg, var(--c-navy-dark) 0%, var(--c-navy) 62%, #214d74 100%);
+}
+
+.hero-inner {
+    width: min(680px, 100%);
+    padding: var(--space-5) var(--space-4) 3rem;
+    display: grid;
+    justify-items: center;
+    gap: 1.1rem;
+}
+
+.hero-logo-wrap {
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: 0.875rem 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.hero-logo-wrap img {
+    width: min(78vw, 380px);
+}
+
+.hero-tagline {
+    font-size: clamp(1.02rem, 2.2vw, 1.2rem);
+    color: rgba(255, 255, 255, 0.86);
+    max-width: 480px;
+}
+
+.hero-actions {
+    margin-top: 0.4rem;
+    width: 100%;
+    max-width: 300px;
+    display: grid;
+    gap: 0.8rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0.85rem 1.4rem;
+    border-radius: 999px;
+    border: 0;
+    font-size: 0.98rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    transition: transform 0.12s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-cta {
+    background: var(--c-cyan);
+    color: var(--c-navy-dark);
+    box-shadow: 0 8px 20px rgba(35, 178, 228, 0.35);
+}
+
+.btn-outline-white {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.55);
+}
+
+.card-icon {
+    height: 96px;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+
+    display: grid;
+    place-items: center;
+    font-size: 2.3rem;
+}
+
+.card-icon--cyan {
+    background: rgba(35, 178, 228, 0.13);
+}
+
+.card-icon--navy {
+    background: rgba(31, 46, 92, 0.09);
+}
+
+.card-icon--gold {
+    background: rgba(255, 193, 44, 0.18);
+}
+
+@media (min-width: 768px) {
+    .hero-actions {
+        max-width: none;
+        grid-auto-flow: column;
+        grid-auto-columns: max-content;
+        justify-content: center;
+    }
+
+    @media (hover: hover) {
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+    }
+}

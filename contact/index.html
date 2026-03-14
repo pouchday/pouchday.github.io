@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Contact | PouchDay</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<link rel="stylesheet" href="/assets/css/contact.css">
+</head>
+
+<body>
+
+	<header>
+		<a href="/" class="logo">
+			<img src="/assets/images/logo.svg" alt="PouchDay Logo">
+		</a>
+
+		<button class="nav-toggle" aria-label="Toggle navigation">
+			<span></span><span></span><span></span>
+		</button>
+		<nav>
+			<a href="/">Home</a>
+			<a href="/shop/">Shop</a>
+			<a href="/travel/">Travel</a>
+			<a href="/donate/">Donate</a>
+			<a href="/contact/">Contact</a>
+		</nav>
+	</header>
+
+	<main>
+		<div class="contact-intro">
+			<h1>Contact Us</h1>
+			<p>Have a question? Send us a message and we’ll reply by email.</p>
+		</div>
+
+		<form action="https://formsubmit.co/pouchday-dev@proton.me" method="POST">
+			<input type="hidden" name="_captcha" value="false">
+			<input type="hidden" name="_subject" value="New Contact Message">
+			<input type="hidden" name="_next" id="contact-next" value="/contact/?sent=1">
+
+			<div class="form-group">
+				<label>Your Name</label>
+				<input type="text" name="name" required>
+			</div>
+
+			<div class="form-group">
+				<label>Your Email</label>
+				<input type="email" name="email" placeholder="you@example.com" required>
+			</div>
+
+			<div class="form-group">
+				<label>Subject</label>
+				<input type="text" name="subject" required>
+			</div>
+
+			<div class="form-group">
+				<label>Message</label>
+				<textarea name="message" rows="6" required></textarea>
+			</div>
+
+			<button type="submit" class="btn-primary">Send Message</button>
+		</form>
+	</main>
+
+	<footer>
+		<p>Follow us for updates</p>
+		<div class="social-links" aria-label="Social media links">
+			<a class="social-link" href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+				<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect>
+					<circle cx="12" cy="12" r="4"></circle>
+					<circle cx="17.5" cy="6.5" r="1"></circle>
+				</svg>
+				<span>Instagram</span>
+			</a>
+			<a class="social-link" href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+				<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M14 8h3V3h-3c-3 0-5 2-5 5v3H6v5h3v5h5v-5h3l1-5h-4V8c0-.7.3-1 1-1z"></path>
+				</svg>
+				<span>Facebook</span>
+			</a>
+		</div>
+	</footer>
+
+	<script src="/assets/js/main.js"></script>
+	<script>
+		const contactNext = document.getElementById('contact-next');
+		if (contactNext) {
+			contactNext.value = `${window.location.origin}/contact/?sent=1`;
+		}
+	</script>
+</body>
+
+</html>

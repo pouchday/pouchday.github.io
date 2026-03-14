@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/travel.css">
 </head>
 
 <body>
@@ -26,6 +27,7 @@
             <a href="/shop/">Shop</a>
             <a href="/travel/">Travel</a>
             <a href="/donate/">Donate</a>
+            <a href="/contact/">Contact</a>
         </nav>
     </header>
 
@@ -33,11 +35,11 @@
         <h1>Current Logistics Status</h1>
         <p>Check below to see if we have travelers heading to your destination.</p>
 
-        <section id="travel-locations" class="card-grid" style="margin-bottom: 2rem;">
+        <section id="travel-locations" class="card-grid travel-locations">
             <p>Loading status...</p>
         </section>
 
-        <hr style="border: 0; border-top: 1px solid #ddd; margin: 2rem 0;">
+        <hr>
 
         <h2>Register a Trip</h2>
         <p>Are you flying somewhere? Help us carry a package.</p>
@@ -55,7 +57,7 @@
 
             <div class="form-group">
                 <label>Travel Date</label>
-                <input type="date" name="travel_date" required style="background: white;">
+                <input type="date" name="travel_date" class="travel-date-input" required>
             </div>
 
             <div class="form-group">

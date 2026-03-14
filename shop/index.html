@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/shop.css">
 </head>
 
 <body>
@@ -28,6 +29,7 @@
             <a href="/shop/">Shop</a>
             <a href="/travel/">Travel</a>
             <a href="/donate/">Donate</a>
+            <a href="/contact/">Contact</a>
         </nav>
     </header>
 
@@ -109,7 +111,6 @@
             const container = document.getElementById('items-container');
             const div = document.createElement('div');
             div.className = 'form-group item-row';
-            div.style.marginTop = '1rem';
             div.innerHTML = `
                 <label>Item ${itemCount} Photo</label>
                 <div class="item-input-row">

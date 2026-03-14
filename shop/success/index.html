@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/shop-success.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
@@ -26,27 +27,28 @@
             <a href="/shop/">Shop</a>
             <a href="/travel/">Travel</a>
             <a href="/donate/">Donate</a>
+            <a href="/contact/">Contact</a>
         </nav>
     </header>
 
-    <main style="text-align: center; padding-top: 3rem;">
+    <main class="shop-success-main">
 
-        <div style="font-size: 5rem; color: #5cb85c; margin-bottom: 1rem;">✓</div>
+        <div class="shop-success-check">✓</div>
 
         <h1>Submission Received!</h1>
         <p>Your manifest has been sent to our logistics team.</p>
 
-        <div class="card" style="max-width: 400px; margin: 2rem auto; text-align: left;">
+        <div class="card shop-success-details">
             <p><strong>Order ID:</strong> <span id="display-id">Loading...</span></p>
             <p><strong>Destination:</strong> <span id="display-dest">Loading...</span></p>
             <p><strong>Weight:</strong> <span id="display-weight">Loading...</span></p>
         </div>
 
-        <button onclick="downloadPDF()" class="btn-primary" style="max-width: 300px;">
+        <button onclick="downloadPDF()" class="btn-primary shop-success-download">
             Download Packing Slip (PDF)
         </button>
 
-        <p style="margin-top: 2rem; color: #666;">
+        <p class="shop-success-note">
             Please print this slip and tape it to your box.
         </p>
 
