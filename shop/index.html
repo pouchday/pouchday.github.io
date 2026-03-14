@@ -38,9 +38,9 @@
         <form id="shop-form" enctype="multipart/form-data">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_subject" value="New Shipping Manifest">
+            <input type="hidden" name="_next" id="next_redirect">
 
             <input type="hidden" name="order_uuid" id="order_uuid">
-            <input type="hidden" name="_next" id="next_redirect">
 
             <div class="form-group">
                 <label>Missionary Photo</label>
@@ -55,8 +55,7 @@
             </div>
 
             <div class="form-group">
-                <button type="button" onclick="addItemField()"
-                    style="background: transparent; color: var(--c-primary); border: 2px solid var(--c-primary); padding: 10px;">
+                <button type="button" class="btn-add-item" onclick="addItemField()">
                     + Add Another Item
                 </button>
             </div>
@@ -69,8 +68,7 @@
             <div class="form-group">
                 <label>Mission Destination</label>
                 <select name="mission" required id="field-mission">
-                    <option value="Brazil South">Brazil South</option>
-                    <option value="Japan Tokyo">Japan Tokyo</option>
+                    <option value="" disabled selected>Loading missions...</option>
                 </select>
             </div>
 
@@ -85,8 +83,21 @@
 
     <footer id="socials-footer">
         <p>Follow us for updates</p>
-        <div style="margin-top: 10px; font-size: 1.2rem;">
-            <a href="#">Instagram</a> &nbsp;&bull;&nbsp; <a href="#">Facebook</a>
+        <div class="social-links" aria-label="Social media links">
+            <a class="social-link" href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect>
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <circle cx="17.5" cy="6.5" r="1"></circle>
+                </svg>
+                <span>Instagram</span>
+            </a>
+            <a class="social-link" href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 8h3V3h-3c-3 0-5 2-5 5v3H6v5h3v5h5v-5h3l1-5h-4V8c0-.7.3-1 1-1z"></path>
+                </svg>
+                <span>Facebook</span>
+            </a>
         </div>
     </footer>
 
@@ -101,15 +112,62 @@
             div.style.marginTop = '1rem';
             div.innerHTML = `
                 <label>Item ${itemCount} Photo</label>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <input type="file" name="item_photo_${itemCount}" accept="image/*" style="flex: 1;">
-                    <button type="button" onclick="this.closest('.item-row').remove()" style="background: #ff4d4d; width: auto; padding: 0 1rem;">X</button>
+                <div class="item-input-row">
+                    <input type="file" name="item_photo_${itemCount}" accept="image/*">
+                    <button type="button" class="btn-delete-item" aria-label="Remove item ${itemCount}" onclick="this.closest('.item-row').remove()">Remove</button>
                 </div>
             `;
             container.appendChild(div);
         }
 
         const form = document.getElementById('shop-form');
+        const missionSelect = document.getElementById('field-mission');
+
+        fetch('/assets/data/missions.json')
+            .then(res => res.json())
+            .then(missions => {
+                const missionEntries = Object.entries(missions || {});
+
+                if (!missionEntries.length) {
+                    missionSelect.innerHTML = '<option value="" disabled selected>No missions available</option>';
+                    return;
+                }
+
+                missionSelect.innerHTML = '';
+
+                missionEntries.forEach(([missionName, isAvailable]) => {
+                    const option = document.createElement('option');
+                    option.value = missionName;
+                    option.textContent = isAvailable ? missionName : `${missionName} (Unavailable)`;
+                    option.disabled = !isAvailable;
+                    missionSelect.appendChild(option);
+                });
+
+                const firstAvailable = missionEntries.find(([, isAvailable]) => isAvailable);
+                if (firstAvailable) {
+                    missionSelect.value = firstAvailable[0];
+                }
+            })
+            .catch(() => {
+                missionSelect.innerHTML = '<option value="" disabled selected>Unable to load missions</option>';
+            });
+
+        function generateUuid() {
+            if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+                return window.crypto.randomUUID();
+            }
+
+            if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
+                const bytes = new Uint8Array(16);
+                window.crypto.getRandomValues(bytes);
+                bytes[6] = (bytes[6] & 0x0f) | 0x40;
+                bytes[8] = (bytes[8] & 0x3f) | 0x80;
+                const hex = Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('');
+                return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+            }
+
+            return `${Date.now()}-${Math.random().toString(16).slice(2, 10)}`;
+        }
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -121,7 +179,7 @@
             // --- NEW LOGIC STARTS HERE ---
 
             // 1. Generate UUID (Short 8-char version is usually enough for packing slips, but here is full)
-            const uuid = crypto.randomUUID(); // e.g. "A1B2C3D4"
+            const uuid = generateUuid();
 
             // 2. Set the Hidden Field (So it goes to Email)
             document.getElementById('order_uuid').value = uuid;

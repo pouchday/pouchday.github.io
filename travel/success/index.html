@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Travel | PouchDay</title>
+    <title>Travel Submitted | PouchDay</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -29,54 +29,34 @@
         </nav>
     </header>
 
-    <main>
-        <h1>Current Logistics Status</h1>
-        <p>Check below to see if we have travelers heading to your destination.</p>
+    <main class="success-message">
+        <h1>Thanks for volunteering to travel with us!</h1>
+        <p>We received your travel details and our team will reach out to you soon with next steps.</p>
 
-        <section id="travel-locations" class="card-grid" style="margin-bottom: 2rem;">
-            <p>Loading status...</p>
-        </section>
-
-        <hr style="border: 0; border-top: 1px solid #ddd; margin: 2rem 0;">
-
-        <h2>Register a Trip</h2>
-        <p>Are you flying somewhere? Help us carry a package.</p>
-
-        <form id="travel-form" action="https://formsubmit.co/pouchday-dev@proton.me" method="POST">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_subject" value="New Traveler Registration">
-
-            <input type="hidden" name="_next" id="travel-next" value="/travel/success/">
-
-            <div class="form-group">
-                <label>Destination City</label>
-                <input type="text" name="destination" placeholder="e.g. Sao Paulo" required>
+        <div class="card success-card">
+            <h3>Stay connected</h3>
+            <p>Follow us on social to see updates, needs, and future opportunities to help.</p>
+            <div class="social-links" aria-label="Social media links">
+                <a class="social-link" href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect>
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <circle cx="17.5" cy="6.5" r="1"></circle>
+                    </svg>
+                    <span>Instagram</span>
+                </a>
+                <a class="social-link" href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 8h3V3h-3c-3 0-5 2-5 5v3H6v5h3v5h5v-5h3l1-5h-4V8c0-.7.3-1 1-1z"></path>
+                    </svg>
+                    <span>Facebook</span>
+                </a>
             </div>
-
-            <div class="form-group">
-                <label>Travel Date</label>
-                <input type="date" name="travel_date" required style="background: white;">
-            </div>
-
-            <div class="form-group">
-                <label>Luggage Capacity</label>
-                <select name="capacity">
-                    <option value="Small Item">I can take a small item</option>
-                    <option value="Extra Suitcase">I can check an extra bag</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Your Email</label>
-                <input type="email" name="email" required>
-            </div>
-
-            <button type="submit" class="btn-primary">Submit Travel Plans</button>
-        </form>
+        </div>
     </main>
 
-    <footer id="socials-footer">
-        <p>Follow us for updates</p>
+    <footer>
+        <p>We appreciate your willingness to serve.</p>
         <div class="social-links" aria-label="Social media links">
             <a class="social-link" href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -96,12 +76,6 @@
     </footer>
 
     <script src="/assets/js/main.js"></script>
-    <script>
-        const travelNext = document.getElementById('travel-next');
-        if (travelNext) {
-            travelNext.value = `${window.location.origin}/travel/success/`;
-        }
-    </script>
 </body>
 
 </html>
