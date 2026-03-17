@@ -83,6 +83,62 @@ body.has-hero {
     border: 2px solid rgba(255, 255, 255, 0.55);
 }
 
+.how-it-works {
+    margin-bottom: var(--space-5);
+    padding: clamp(1.1rem, 2.5vw, 1.6rem);
+    background: linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.how-it-works h2 {
+    margin-bottom: 0.95rem;
+}
+
+.steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 0.95rem;
+    padding: 0.8rem;
+    border-radius: var(--radius-md);
+    background: #fff;
+    border: 1px solid color-mix(in srgb, var(--c-cyan) 22%, var(--c-border));
+}
+
+.step-number {
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 800;
+    color: var(--c-navy);
+    background: color-mix(in srgb, var(--c-cyan) 42%, #fff);
+    border: 2px solid color-mix(in srgb, var(--c-cyan) 60%, #cbe8f6);
+}
+
+.step-copy h3 {
+    margin-bottom: 0.3rem;
+}
+
+.step-copy p {
+    margin: 0;
+}
+
 .card-icon {
     height: 96px;
     margin-bottom: 1rem;
@@ -106,6 +162,15 @@ body.has-hero {
 }
 
 @media (min-width: 768px) {
+    .how-it-works {
+        padding: clamp(1.3rem, 2.2vw, 1.9rem);
+    }
+
+    .step-item {
+        align-items: center;
+        gap: 1.05rem;
+    }
+
     .hero-actions {
         max-width: none;
         grid-auto-flow: column;
