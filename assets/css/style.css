@@ -170,6 +170,65 @@ nav a:active {
     background: rgba(255, 255, 255, 0.08);
 }
 
+/* Nav group dropdown (mobile) */
+.nav-group {
+    width: 100%;
+}
+
+.nav-group-btn {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    text-align: center;
+    font: inherit;
+    font-weight: 700;
+    color: #eef4ff;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35em;
+    cursor: pointer;
+}
+
+.nav-group-btn:active {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-chevron {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.nav-group-btn[aria-expanded="true"] .nav-chevron {
+    transform: rotate(180deg);
+}
+
+.nav-group-menu {
+    display: none;
+    flex-direction: column;
+}
+
+.nav-group-menu.is-open {
+    display: flex;
+}
+
+.nav-group-menu a {
+    width: 100%;
+    padding: 0.75rem 2.5rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #eef4ff;
+    background: rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+}
+
+.nav-group-menu a:active {
+    background: rgba(255, 255, 255, 0.12);
+}
+
 /* =====================================================
    3) BUTTONS
    ===================================================== */
@@ -410,6 +469,58 @@ footer a {
         opacity: 0.86;
     }
 
+    /* Nav dropdown (desktop) */
+    .nav-group {
+        width: auto;
+        position: relative;
+    }
+
+    .nav-group-btn {
+        width: auto;
+        padding: 0;
+        border: 0;
+        color: var(--c-navy);
+        font-size: 0.95rem;
+        font-weight: 700;
+        opacity: 0.86;
+        background: transparent;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25em;
+    }
+
+    .nav-group-menu {
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        left: 50%;
+        transform: translateX(-50%);
+        min-width: 190px;
+        flex-direction: column;
+        background: var(--c-surface);
+        border: 1px solid var(--c-border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        padding: 0.3rem 0;
+        z-index: 200;
+    }
+
+    .nav-group-menu.is-open {
+        display: flex;
+    }
+
+    .nav-group-menu a {
+        width: auto;
+        padding: 0.6rem 1.1rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--c-navy);
+        background: transparent;
+        border: 0;
+        text-align: left;
+        display: block;
+        white-space: nowrap;
+    }
+
     .card-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
@@ -421,6 +532,15 @@ footer a {
     @media (hover: hover) {
         nav a:hover {
             opacity: 1;
+        }
+
+        .nav-group-btn:hover {
+            opacity: 1;
+        }
+
+        .nav-group-menu a:hover {
+            background: var(--c-bg);
+            color: var(--c-cyan);
         }
 
         .social-link:hover {

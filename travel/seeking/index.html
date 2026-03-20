@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Seeking Travelers | PouchDay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/travel-seeking.css">
+</head>
+
+<body>
+
+    <header>
+        <a href="/" class="logo">
+            <img src="/assets/images/logo.svg" alt="PouchDay Logo">
+        </a>
+
+        <button class="nav-toggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/shop/">Shop</a>
+            <div class="nav-group">
+                <button class="nav-group-btn" aria-expanded="false" aria-controls="travel-menu">
+                    Travel
+                    <svg class="nav-chevron" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg>
+                </button>
+                <div id="travel-menu" class="nav-group-menu">
+                    <a href="/travel/seeking/">Seeking Travelers</a>
+                    <a href="/travel/request/">Request a Courier</a>
+                </div>
+            </div>
+            <a href="/donate/">Donate</a>
+            <a href="/contact/">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Seeking Travelers</h1>
+        <p>We're looking for volunteers to carry packages on the following upcoming trips. Sign up below if you're available on one of these dates.</p>
+
+        <div id="flights-wrap" class="flights-table-wrap">
+            <table class="flights-table" aria-label="Upcoming trips">
+                <thead id="flights-thead"></thead>
+                <tbody id="flights-tbody">
+                    <tr><td colspan="99">Loading schedule…</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <hr>
+
+        <h2>Sign Up for a Trip</h2>
+        <p>Select a trip from the schedule above, leave your email, and we'll be in touch.</p>
+
+        <form id="seeking-form" action="https://formsubmit.co/pouchday-dev@proton.me" method="POST">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" value="Traveler Sign-Up">
+            <input type="hidden" name="_next" id="seeking-next" value="/travel/seeking/success/">
+
+            <div class="form-group">
+                <label for="field-trip">Select a Trip</label>
+                <select name="trip" id="field-trip" required>
+                    <option value="" disabled selected>Loading trips…</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="field-email">Your Email</label>
+                <input type="email" name="email" id="field-email" placeholder="you@example.com" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Sign Up</button>
+        </form>
+    </main>
+
+    <footer id="socials-footer">
+        <p>Follow us for updates</p>
+        <div class="social-links" aria-label="Social media links">
+            <a class="social-link" href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect>
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <circle cx="17.5" cy="6.5" r="1"></circle>
+                </svg>
+                <span>Instagram</span>
+            </a>
+            <a class="social-link" href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 8h3V3h-3c-3 0-5 2-5 5v3H6v5h3v5h5v-5h3l1-5h-4V8c0-.7.3-1 1-1z"></path>
+                </svg>
+                <span>Facebook</span>
+            </a>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+    <script>
+        // Fix absolute redirect for FormSubmit
+        const seekingNext = document.getElementById('seeking-next');
+        if (seekingNext) {
+            seekingNext.value = `${window.location.origin}/travel/seeking/success/`;
+        }
+
+        const FLIGHTS_TSV_URL = 'https://docs.google.com/spreadsheets/d/1pNKEJRMOZY2yTuOt91vOZ9qeRW5S9oVaF9NnkLsoEOc/export?gid=712744042&format=tsv';
+
+        function parseTSV(text) {
+            const lines = text.trim().split('\n');
+            const headers = lines[0].split('\t').map(h => h.trim());
+            const rows = lines.slice(1)
+                .map(line => line.split('\t').map(c => c.trim()))
+                .filter(cols => cols.some(c => c));
+            return { headers, rows };
+        }
+
+        function findIdx(headers, keywords, skip) {
+            return headers.findIndex((h, i) => i !== skip && keywords.some(k => h.toLowerCase().includes(k)));
+        }
+
+        function statusBadge(text) {
+            const lower = (text || '').toLowerCase();
+            const cls = lower.includes('full') ? 'status-badge--full' : 'status-badge--open';
+            return `<span class="status-badge ${cls}">${text || ''}</span>`;
+        }
+
+        fetch(FLIGHTS_TSV_URL)
+            .then(r => r.text())
+            .then(text => {
+                const { headers, rows } = parseTSV(text);
+                if (!rows.length) {
+                    document.getElementById('flights-tbody').innerHTML =
+                        '<tr><td colspan="99">No trips scheduled at this time.</td></tr>';
+                    document.getElementById('field-trip').innerHTML =
+                        '<option value="" disabled selected>No trips available</option>';
+                    return;
+                }
+
+                const dateIdx = findIdx(headers, ['date'], -1);
+                const cityIdx = findIdx(headers, ['city', 'location', 'destination'], dateIdx);
+                const statusIdx = findIdx(headers, ['status'], Math.max(dateIdx, cityIdx));
+
+                // Sort by date if date column exists
+                if (dateIdx >= 0) {
+                    rows.sort((a, b) => {
+                        const da = new Date(a[dateIdx] || '');
+                        const db = new Date(b[dateIdx] || '');
+                        return da - db;
+                    });
+                }
+
+                // Build visible columns (date if present, city, status if present)
+                const visibleCols = [];
+                if (dateIdx >= 0) visibleCols.push({ idx: dateIdx, label: headers[dateIdx] });
+                if (cityIdx >= 0) visibleCols.push({ idx: cityIdx, label: headers[cityIdx] });
+                if (statusIdx >= 0) visibleCols.push({ idx: statusIdx, label: headers[statusIdx] });
+                // Fall back to showing all columns if we found nothing
+                if (!visibleCols.length) {
+                    headers.forEach((h, i) => visibleCols.push({ idx: i, label: h }));
+                }
+
+                // Render table header
+                document.getElementById('flights-thead').innerHTML =
+                    '<tr>' + visibleCols.map(c => `<th>${c.label}</th>`).join('') + '</tr>';
+
+                // Render table rows
+                document.getElementById('flights-tbody').innerHTML = rows.map(cols =>
+                    '<tr>' + visibleCols.map(c => {
+                        const val = cols[c.idx] || '';
+                        if (c.idx === statusIdx) return `<td>${statusBadge(val)}</td>`;
+                        return `<td>${val}</td>`;
+                    }).join('') + '</tr>'
+                ).join('');
+
+                // Populate the select dropdown
+                const tripSelect = document.getElementById('field-trip');
+                tripSelect.innerHTML = '<option value="" disabled selected>Select a trip…</option>';
+                rows.forEach(cols => {
+                    const city = cityIdx >= 0 ? cols[cityIdx] : '';
+                    const date = dateIdx >= 0 ? cols[dateIdx] : '';
+                    if (!city && !date) return;
+                    const label = date ? `${date} – ${city}` : city;
+                    const opt = document.createElement('option');
+                    opt.value = label;
+                    opt.textContent = label;
+                    tripSelect.appendChild(opt);
+                });
+            })
+            .catch(() => {
+                document.getElementById('flights-tbody').innerHTML =
+                    '<tr><td colspan="99">Unable to load trip schedule.</td></tr>';
+                document.getElementById('field-trip').innerHTML =
+                    '<option value="" disabled selected>Unable to load trips</option>';
+            });
+    </script>
+</body>
+
+</html>

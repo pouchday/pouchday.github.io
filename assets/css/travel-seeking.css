@@ -1,0 +1,61 @@
+/* Travel – Seeking Travelers page */
+
+.flights-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 2rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--c-border);
+    box-shadow: var(--shadow-sm);
+}
+
+.flights-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--c-surface);
+    font-size: 0.95rem;
+}
+
+.flights-table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 800;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--c-navy);
+    background: var(--c-bg);
+    border-bottom: 2px solid var(--c-border);
+}
+
+.flights-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--c-border);
+    color: var(--c-text);
+    vertical-align: middle;
+}
+
+.flights-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.flights-table tbody tr:nth-child(even) td {
+    background: #fafbfd;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.22rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.status-badge--open {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-badge--full {
+    background: #fdecea;
+    color: #c62828;
+}

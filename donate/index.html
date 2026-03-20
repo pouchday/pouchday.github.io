@@ -24,7 +24,16 @@
         <nav>
             <a href="/">Home</a>
             <a href="/shop/">Shop</a>
-            <a href="/travel/">Travel</a>
+            <div class="nav-group">
+                <button class="nav-group-btn" aria-expanded="false" aria-controls="travel-menu">
+                    Travel
+                    <svg class="nav-chevron" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg>
+                </button>
+                <div id="travel-menu" class="nav-group-menu">
+                    <a href="/travel/seeking/">Seeking Travelers</a>
+                    <a href="/travel/request/">Request a Courier</a>
+                </div>
+            </div>
             <a href="/donate/">Donate</a>
             <a href="/contact/">Contact</a>
         </nav>
