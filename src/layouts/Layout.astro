@@ -1,0 +1,401 @@
+---
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+
+interface Props {
+  title: string;
+  bodyClass?: string;
+}
+
+const { title, bodyClass = '' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Connecting missionaries with the supplies they need, one trusted traveler at a time." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="icon" type="image/svg+xml" href="/images/logo.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} | PouchDay</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body class={bodyClass}>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+/*
+ * PouchDay – Global Styles
+ * Brand palette from logo.svg
+ * Navy: #1f2e5c
+ * Cyan: #23b2e4
+ */
+
+/* =====================================================
+   0) TOKENS
+   ===================================================== */
+:root {
+    --navy: #1f2e5c;
+    --navy-dark: #0d1a3a;
+    --cyan: #23b2e4;
+    --bg: #f5f7fc;
+    --surface: #ffffff;
+    --text: #162033;
+    --muted: #5f6b80;
+    --radius: 12px;
+    --shadow: 0 2px 16px rgba(31,46,92,0.08);
+
+    /* Legacy aliases */
+    --c-navy: #1f2e5c;
+    --c-navy-dark: #0d1a3a;
+    --c-cyan: #23b2e4;
+    --c-bg: #f5f7fc;
+    --c-surface: #ffffff;
+    --c-text: #162033;
+    --c-muted: #5f6b80;
+    --c-border: #e3e9f4;
+    --c-primary: #1f2e5c;
+
+    --header-height: 68px;
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+
+    --space-1: 0.5rem;
+    --space-2: 0.875rem;
+    --space-3: 1.25rem;
+    --space-4: 1.75rem;
+    --space-5: 2.5rem;
+
+    --max-width: 860px;
+
+    --shadow-sm: 0 4px 14px rgba(19, 33, 66, 0.07);
+    --shadow-md: 0 10px 30px rgba(19, 33, 66, 0.12);
+}
+
+/* =====================================================
+   1) RESET + BASE
+   ===================================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+figure {
+    margin: 0;
+}
+
+body {
+    font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--c-bg);
+    color: var(--c-text);
+    line-height: 1.6;
+    padding-top: var(--header-height);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* Accessible focus states */
+:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--c-cyan) 60%, white);
+    outline-offset: 2px;
+}
+
+/* =====================================================
+    3) BUTTONS
+    ===================================================== */
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+.btn-primary,
+button[type="submit"] {
+    width: 100%;
+    border: 0;
+    border-radius: 12px;
+    min-height: 48px;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fff;
+    background: var(--c-navy);
+    transition: transform 0.12s ease, background-color 0.2s ease;
+}
+
+.btn-primary:active,
+button[type="submit"]:active {
+    transform: translateY(1px);
+    background: var(--c-navy-dark);
+}
+
+/* =====================================================
+    4) LAYOUT + TYPE
+    ===================================================== */
+main {
+    width: min(var(--max-width), 100%);
+    margin: 0 auto;
+    min-height: 70vh;
+    padding: var(--space-4);
+}
+
+h1,
+h2,
+h3 {
+    color: var(--c-navy);
+    line-height: 1.22;
+}
+
+h1 {
+    font-size: clamp(1.7rem, 4vw, 2.05rem);
+    font-weight: 800;
+    margin-bottom: 0.55rem;
+}
+
+h2 {
+    font-size: clamp(1.25rem, 2.8vw, 1.45rem);
+    font-weight: 800;
+    margin-bottom: 0.65rem;
+}
+
+h3 {
+    font-size: 1.12rem;
+    font-weight: 800;
+    margin-bottom: 0.65rem;
+}
+
+p {
+    color: var(--c-muted);
+    margin-bottom: 1rem;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--c-border);
+    margin: 2rem 0;
+}
+
+/* =====================================================
+    5) CARDS
+    ===================================================== */
+.card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+}
+
+.card {
+    display: block;
+    color: inherit;
+    text-align: center;
+
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.18s ease, box-shadow 0.22s ease;
+}
+
+.card:active {
+    transform: scale(0.99);
+}
+
+/* =====================================================
+   6) FORMS
+   ===================================================== */
+form {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-top: 4px solid var(--c-cyan);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.45rem;
+    color: var(--c-navy);
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    border: 2px solid #dbe3f1;
+    border-radius: 12px;
+    background: #f9fbff;
+    color: var(--c-text);
+    font: inherit;
+    font-size: 16px;
+    padding: 0.78rem 0.9rem;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--c-cyan);
+    background: #fff;
+}
+
+input[type="file"] {
+    padding: 0.62rem;
+    border-style: dashed;
+    background: #fff;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Image Upload Tooltip */
+.upload-tooltip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--muted);
+    color: white;
+    font-size: 11px;
+    cursor: help;
+    position: relative;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+.upload-tooltip:hover::after {
+    content: attr(data-tip);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(100% + 6px);
+    background: var(--navy-dark);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 100;
+    pointer-events: none;
+}
+
+/* =====================================================
+    7) FOOTER
+    ===================================================== */
+footer {
+    margin-top: 3rem;
+    padding: 2.2rem var(--space-4);
+    border-top: 1px solid var(--c-border);
+    text-align: center;
+    font-size: 0.88rem;
+    color: #7b869c;
+}
+
+footer a {
+    color: var(--c-cyan);
+    font-weight: 700;
+}
+
+.social-links {
+    margin-top: 0.9rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--c-border);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--c-navy);
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1;
+    transition: transform 0.12s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.social-link svg {
+    width: 18px;
+    height: 18px;
+    color: var(--c-cyan);
+    flex-shrink: 0;
+}
+
+/* =====================================================
+   8) DESKTOP (768px+)
+   ===================================================== */
+@media (min-width: 768px) {
+    .card-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    main {
+        padding: 2.8rem var(--space-4);
+    }
+
+    @media (hover: hover) {
+        .social-link:hover {
+            transform: translateY(-1px);
+            border-color: color-mix(in srgb, var(--c-cyan) 50%, var(--c-border));
+            color: var(--c-cyan);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+    }
+}
+</style>
