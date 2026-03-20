@@ -45,31 +45,49 @@ import Layout from '@/layouts/Layout.astro';
 .flights-table-wrap {
     overflow-x: auto;
     margin: 2rem 0;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--c-border);
 }
 
 .flights-table {
     width: 100%;
     border-collapse: collapse;
     background: var(--c-surface);
-    border: 1px solid var(--c-border);
     border-radius: var(--radius-lg);
     overflow: hidden;
 }
 
+.flights-table thead {
+    border-bottom: 2px solid var(--c-border);
+}
+
 .flights-table th,
 .flights-table td {
-    padding: 1rem;
+    padding: 1rem 1.25rem;
     text-align: left;
     border-bottom: 1px solid var(--c-border);
 }
 
 .flights-table th {
-    background: linear-gradient(180deg, #fff 0%, #f8fbff 100%);
-    font-weight: 700;
+    background: linear-gradient(180deg, #f0f6ff 0%, #e8f2fc 100%);
+    font-weight: 800;
     color: var(--c-navy);
     text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.02em;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+}
+
+.flights-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.flights-table tbody tr:nth-child(even) {
+    background: #f8fbff;
+}
+
+.flights-table tbody tr:hover {
+    background: color-mix(in srgb, var(--c-cyan) 8%, #fff);
 }
 
 .flights-table tbody tr:last-child td {
@@ -101,7 +119,7 @@ import Layout from '@/layouts/Layout.astro';
 @media (max-width: 768px) {
     .flights-table th,
     .flights-table td {
-        padding: 0.75rem 0.5rem;
+        padding: 0.75rem 0.75rem;
         font-size: 0.9rem;
     }
 }

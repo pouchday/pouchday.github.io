@@ -15,12 +15,12 @@ import Layout from '@/layouts/Layout.astro';
             <p><strong>Weight:</strong> <span id="display-weight">Loading...</span></p>
         </div>
 
-        <button onclick="downloadPDF()" class="btn-primary shop-success-download">
+        <button id="download-pdf-btn" class="btn-primary shop-success-download">
             Download Packing Slip (PDF)
         </button>
 
         <p class="shop-success-note">
-            Please print this slip and tape it to your box.
+            Please print this slip and place it in a ziplock bag with the items.
         </p>
         
         <div class="next-steps">
@@ -135,4 +135,6 @@ async function downloadPDF() {
     // Save
     doc.save(`PouchDay_Shipping_Label_${orderId.slice(0, 8)}.pdf`);
 }
+
+document.getElementById('download-pdf-btn').addEventListener('click', downloadPDF);
 </script>
