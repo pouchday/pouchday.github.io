@@ -141,8 +141,13 @@
                 }
 
                 const dateIdx = findIdx(headers, ['date'], -1);
-                const cityIdx = findIdx(headers, ['city', 'location', 'destination'], dateIdx);
+                const cityIdx = findIdx(headers, ['city', 'location', 'destination', 'mission', 'place', 'country'], dateIdx);
                 const statusIdx = findIdx(headers, ['status'], Math.max(dateIdx, cityIdx));
+
+                // Fall back to the first column that isn't date or status when no location column is matched
+                // (handles any sheet column name that doesn't contain a recognized location keyword)
+                const locationIdx = cityIdx >= 0 ? cityIdx :
+                    headers.findIndex((h, i) => i !== dateIdx && i !== statusIdx);
 
                 // Sort by date if date column exists
                 if (dateIdx >= 0) {
@@ -153,10 +158,10 @@
                     });
                 }
 
-                // Build visible columns (date if present, city, status if present)
+                // Build visible columns (date if present, location, status if present)
                 const visibleCols = [];
                 if (dateIdx >= 0) visibleCols.push({ idx: dateIdx, label: headers[dateIdx] });
-                if (cityIdx >= 0) visibleCols.push({ idx: cityIdx, label: headers[cityIdx] });
+                if (locationIdx >= 0) visibleCols.push({ idx: locationIdx, label: headers[locationIdx] });
                 if (statusIdx >= 0) visibleCols.push({ idx: statusIdx, label: headers[statusIdx] });
                 // Fall back to showing all columns if we found nothing
                 if (!visibleCols.length) {
@@ -180,7 +185,7 @@
                 const tripSelect = document.getElementById('field-trip');
                 tripSelect.innerHTML = '<option value="" disabled selected>Select a trip…</option>';
                 rows.forEach(cols => {
-                    const city = cityIdx >= 0 ? cols[cityIdx] : '';
+                    const city = locationIdx >= 0 ? cols[locationIdx] : '';
                     const date = dateIdx >= 0 ? cols[dateIdx] : '';
                     if (!city && !date) return;
                     const label = date ? `${date} – ${city}` : city;
