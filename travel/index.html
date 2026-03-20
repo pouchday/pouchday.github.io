@@ -25,56 +25,42 @@
         <nav>
             <a href="/">Home</a>
             <a href="/shop/">Shop</a>
-            <a href="/travel/">Travel</a>
+            <div class="nav-group">
+                <button class="nav-group-btn" aria-expanded="false" aria-controls="travel-menu">
+                    Travel
+                    <svg class="nav-chevron" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg>
+                </button>
+                <div id="travel-menu" class="nav-group-menu">
+                    <a href="/travel/seeking/">Seeking Travelers</a>
+                    <a href="/travel/request/">Request a Courier</a>
+                </div>
+            </div>
             <a href="/donate/">Donate</a>
             <a href="/contact/">Contact</a>
         </nav>
     </header>
 
     <main>
-        <h1>Current Logistics Status</h1>
-        <p>Check below to see if we have travelers heading to your destination.</p>
+        <h1>Travel</h1>
+        <p>PouchDay connects missionaries with trusted volunteers who carry supplies across borders. There are two ways to get involved.</p>
 
-        <section id="travel-locations" class="card-grid travel-locations">
-            <p>Loading status...</p>
+        <hr>
+
+        <section class="travel-hub-section">
+            <div class="travel-hub-icon">✈️</div>
+            <h2>Seeking Travelers</h2>
+            <p>We maintain a list of upcoming trips where we need volunteers to carry a package. Browse the schedule and sign up if you're available to help on one of those dates.</p>
+            <a href="/travel/seeking/" class="btn-primary travel-hub-btn">See Available Trips</a>
         </section>
 
         <hr>
 
-        <h2>Register a Trip</h2>
-        <p>Are you flying somewhere? Help us carry a package.</p>
-
-        <form id="travel-form" action="https://formsubmit.co/pouchday-dev@proton.me" method="POST">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_subject" value="New Traveler Registration">
-
-            <input type="hidden" name="_next" id="travel-next" value="/travel/success/">
-
-            <div class="form-group">
-                <label>Destination City</label>
-                <input type="text" name="destination" placeholder="e.g. Sao Paulo" required>
-            </div>
-
-            <div class="form-group">
-                <label>Travel Date</label>
-                <input type="date" name="travel_date" class="travel-date-input" required>
-            </div>
-
-            <div class="form-group">
-                <label>Luggage Capacity</label>
-                <select name="capacity">
-                    <option value="Small Item">I can take a small item</option>
-                    <option value="Extra Suitcase">I can check an extra bag</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Your Email</label>
-                <input type="email" name="email" required>
-            </div>
-
-            <button type="submit" class="btn-primary">Submit Travel Plans</button>
-        </form>
+        <section class="travel-hub-section">
+            <div class="travel-hub-icon">📦</div>
+            <h2>Request a Courier</h2>
+            <p>Already planning a trip? Let us know where you're flying and when, and we'll see if there are any packages that need to reach a mission in that area.</p>
+            <a href="/travel/request/" class="btn-primary travel-hub-btn">Offer to Carry</a>
+        </section>
     </main>
 
     <footer id="socials-footer">
@@ -98,12 +84,6 @@
     </footer>
 
     <script src="/assets/js/main.js"></script>
-    <script>
-        const travelNext = document.getElementById('travel-next');
-        if (travelNext) {
-            travelNext.value = `${window.location.origin}/travel/success/`;
-        }
-    </script>
 </body>
 
 </html>

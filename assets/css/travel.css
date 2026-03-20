@@ -1,9 +1,22 @@
-/* Travel page only */
+/* Travel hub page */
 
-.travel-locations {
-    margin-bottom: 2rem;
+.travel-hub-section {
+    padding: 1rem 0 0.5rem;
 }
 
+.travel-hub-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.travel-hub-btn {
+    display: block;
+    margin-top: 1.25rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* travel-date-input kept for backward compat */
 .travel-date-input {
     background: #fff;
 }
