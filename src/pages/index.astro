@@ -82,6 +82,11 @@ import Layout from '@/layouts/Layout.astro';
     align-items: center;
     justify-content: center;
 
+    /* Break out of the constrained main container */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+
     background:
         radial-gradient(1200px 600px at 20% 75%, rgba(35, 178, 228, 0.18), transparent 60%),
         linear-gradient(155deg, var(--c-navy-dark) 0%, var(--c-navy) 62%, #214d74 100%);
