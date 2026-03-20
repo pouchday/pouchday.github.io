@@ -500,8 +500,8 @@ footer a {
         border: 1px solid var(--c-border);
         border-radius: var(--radius-md);
         box-shadow: var(--shadow-md);
-        padding: 0.3rem 0;
         z-index: 200;
+        overflow: clip;
     }
 
     .nav-group-menu.is-open {
