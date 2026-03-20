@@ -1,0 +1,53 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout title="Travel Hub">
+    <h1>Travel Hub</h1>
+    <p>PouchDay connects missionaries with trusted volunteers who carry supplies across borders. There are two ways to get involved.</p>
+
+    <hr>
+
+    <section class="travel-hub-section">
+        <div class="travel-hub-icon">✈️</div>
+        <h2>Seeking Travelers</h2>
+        <p>We maintain a list of upcoming trips where we need volunteers to carry a package. Browse the schedule and sign up if you're available to help on one of those dates.</p>
+        <a href="/travel/seeking/" class="btn-primary travel-hub-btn">See Available Trips</a>
+    </section>
+
+    <hr>
+
+    <section class="travel-hub-section">
+        <div class="travel-hub-icon">📦</div>
+        <h2>Request a Courier</h2>
+        <p>Already planning a trip? Let us know where you're flying and when, and we'll see if there are any packages that need to reach a mission in that area.</p>
+        <a href="/travel/request/" class="btn-primary travel-hub-btn">Offer to Carry</a>
+    </section>
+</Layout>
+
+<style>
+.travel-hub-section {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.travel-hub-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+.travel-hub-section h2 {
+    margin-bottom: 1rem;
+}
+
+.travel-hub-section p {
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+}
+
+.travel-hub-btn {
+    max-width: 250px;
+    margin: 0 auto;
+    text-align: center;
+}
+</style>

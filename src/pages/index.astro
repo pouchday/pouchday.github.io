@@ -1,0 +1,254 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout title="Home" bodyClass="has-hero">
+    <!-- Full-screen brand hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-logo-wrap">
+                <img src="/images/logo.svg" alt="PouchDay Logo">
+            </div>
+            <p class="hero-tagline">Connecting missionaries with the supplies they need,<br>one trusted traveler at a time.</p>
+            <div class="hero-actions">
+                <a href="/shop/" class="btn btn-cta">Send a Package</a>
+                <a href="/travel/" class="btn btn-outline-white">I'm Traveling</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works" aria-labelledby="how-it-works-title">
+        <h2 id="how-it-works-title">How PouchDay Works</h2>
+        <ol class="steps-list">
+            <li class="step-item">
+                <span class="step-number" aria-hidden="true">1</span>
+                <div class="step-copy">
+                    <h3>Create your request</h3>
+                    <p>Share what supplies you need, where they need to go, and when they are needed.</p>
+                </div>
+            </li>
+            <li class="step-item">
+                <span class="step-number" aria-hidden="true">2</span>
+                <div class="step-copy">
+                    <h3>Get matched with a traveler</h3>
+                    <p>We connect your request with a trusted traveler headed your direction.</p>
+                </div>
+            </li>
+            <li class="step-item">
+                <span class="step-number" aria-hidden="true">3</span>
+                <div class="step-copy">
+                    <h3>Deliver with confidence</h3>
+                    <p>Coordinate handoff details and get updates until your package arrives.</p>
+                </div>
+            </li>
+        </ol>
+    </section>
+
+    <section class="card-grid">
+        <a href="/shop/" class="card">
+            <div class="card-icon card-icon--cyan">📦</div>
+            <h3>Send a Package</h3>
+            <p>Upload a manifest and get your box shipped.</p>
+        </a>
+
+        <a href="/travel/" class="card">
+            <div class="card-icon card-icon--navy">✈️</div>
+            <h3>I'm Traveling</h3>
+            <p>Register your trip to help carry supplies.</p>
+        </a>
+
+        <a href="/donate/" class="card">
+            <div class="card-icon card-icon--gold">💛</div>
+            <h3>Donate</h3>
+            <p>Help cover shipping costs for others.</p>
+        </a>
+    </section>
+</Layout>
+
+<style>
+/* Home page styles */
+:global(body.has-hero) {
+    padding-top: 0;
+}
+
+.hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-top: var(--header-height);
+    color: #fff;
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(1200px 600px at 20% 75%, rgba(35, 178, 228, 0.18), transparent 60%),
+        linear-gradient(155deg, var(--c-navy-dark) 0%, var(--c-navy) 62%, #214d74 100%);
+}
+
+.hero-inner {
+    width: min(680px, 100%);
+    padding: var(--space-5) var(--space-4) 3rem;
+    display: grid;
+    justify-items: center;
+    gap: 1.1rem;
+}
+
+.hero-logo-wrap {
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: 0.875rem 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.hero-logo-wrap img {
+    width: min(78vw, 380px);
+}
+
+.hero-tagline {
+    font-size: clamp(1.02rem, 2.2vw, 1.2rem);
+    color: rgba(255, 255, 255, 0.86);
+    max-width: 480px;
+}
+
+.hero-actions {
+    margin-top: 0.4rem;
+    width: 100%;
+    max-width: 300px;
+    display: grid;
+    gap: 0.8rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0.85rem 1.4rem;
+    border-radius: 999px;
+    border: 0;
+    font-size: 0.98rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    transition: transform 0.12s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-cta {
+    background: var(--c-cyan);
+    color: var(--c-navy-dark);
+    box-shadow: 0 8px 20px rgba(35, 178, 228, 0.35);
+}
+
+.btn-outline-white {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.55);
+}
+
+.how-it-works {
+    margin-bottom: var(--space-5);
+    padding: clamp(1.1rem, 2.5vw, 1.6rem);
+    background: linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.how-it-works h2 {
+    margin-bottom: 0.95rem;
+}
+
+.steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 0.95rem;
+    padding: 0.8rem;
+    border-radius: var(--radius-md);
+    background: #fff;
+    border: 1px solid color-mix(in srgb, var(--c-cyan) 22%, var(--c-border));
+}
+
+.step-number {
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 800;
+    color: var(--c-navy);
+    background: color-mix(in srgb, var(--c-cyan) 42%, #fff);
+    border: 2px solid color-mix(in srgb, var(--c-cyan) 60%, #cbe8f6);
+}
+
+.step-copy h3 {
+    margin-bottom: 0.3rem;
+}
+
+.step-copy p {
+    margin: 0;
+}
+
+.card-icon {
+    height: 96px;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+
+    display: grid;
+    place-items: center;
+    font-size: 2.3rem;
+}
+
+.card-icon--cyan {
+    background: rgba(35, 178, 228, 0.13);
+}
+
+.card-icon--navy {
+    background: rgba(31, 46, 92, 0.09);
+}
+
+.card-icon--gold {
+    background: rgba(255, 193, 44, 0.18);
+}
+
+@media (min-width: 768px) {
+    .how-it-works {
+        padding: clamp(1.3rem, 2.2vw, 1.9rem);
+    }
+
+    .step-item {
+        align-items: center;
+        gap: 1.05rem;
+    }
+
+    .hero-actions {
+        max-width: none;
+        grid-auto-flow: column;
+        grid-auto-columns: max-content;
+        justify-content: center;
+    }
+
+    @media (hover: hover) {
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+    }
+}
+</style>
