@@ -3,37 +3,52 @@
 ---
 
 <header>
-    <a href="/" class="logo">
-        <img src="/images/logo.svg" alt="PouchDay Logo">
-    </a>
+  <a href="/" class="logo">
+    <img src="/images/logo.svg" alt="PouchDay Logo" />
+  </a>
 
-    <button class="nav-toggle" aria-label="Toggle navigation">
-        <span></span><span></span><span></span>
-    </button>
-    
-    <nav>
-        <a href="/">Home</a>
-        <a href="/shop/">Shop</a>
-        <div class="nav-group">
-            <button class="nav-group-btn" aria-expanded="false" aria-controls="travel-menu">
-                Travel
-                <svg class="nav-chevron" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg>
-            </button>
-            <div id="travel-menu" class="nav-group-menu">
-                <a href="/travel/seeking/">Seeking Travelers</a>
-                <a href="/travel/request/">Request a Courier</a>
-            </div>
-        </div>
-        <a href="/donate/">Donate</a>
-        <a href="/contact/">Contact</a>
-    </nav>
+  <button class="nav-toggle" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav>
+    <a href="/">Home</a>
+    <a href="/ship/">Ship</a>
+    <div class="nav-group">
+      <button
+        class="nav-group-btn"
+        aria-expanded="false"
+        aria-controls="travel-menu"
+      >
+        Travel
+        <svg
+          class="nav-chevron"
+          viewBox="0 0 10 6"
+          width="10"
+          height="6"
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"><path d="M1 1l4 4 4-4"></path></svg
+        >
+      </button>
+      <div id="travel-menu" class="nav-group-menu">
+        <a href="/travel/seeking/">Seeking Travelers</a>
+        <a href="/travel/request/">Request a Courier</a>
+      </div>
+    </div>
+    <a href="/donate/">Donate</a>
+    <a href="/contact/">Contact</a>
+  </nav>
 </header>
 
 <style>
-/* =====================================================
+  /* =====================================================
    2) HEADER + NAV
    ===================================================== */
-header {
+  header {
     position: fixed;
     inset: 0 0 auto 0;
     height: var(--header-height);
@@ -48,19 +63,19 @@ header {
     border-bottom: 1px solid rgba(31, 46, 92, 0.12);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-}
+  }
 
-.logo {
+  .logo {
     display: flex;
     align-items: center;
-}
+  }
 
-.logo img {
+  .logo img {
     height: 36px;
     width: auto;
-}
+  }
 
-.nav-toggle {
+  .nav-toggle {
     display: inline-flex;
     flex-direction: column;
     gap: 5px;
@@ -68,17 +83,19 @@ header {
     border: 0;
     padding: 6px;
     cursor: pointer;
-}
+  }
 
-.nav-toggle span {
+  .nav-toggle span {
     width: 24px;
     height: 2.5px;
     border-radius: 3px;
     background: var(--c-navy);
-    transition: transform 0.2s ease, opacity 0.2s ease;
-}
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+  }
 
-nav {
+  nav {
     position: fixed;
     left: 0;
     top: var(--header-height);
@@ -92,31 +109,31 @@ nav {
 
     background: rgba(13, 26, 58, 0.97);
     transition: height 0.25s ease;
-}
+  }
 
-:global(body.nav-open) nav {
+  :global(body.nav-open) nav {
     height: calc(100svh - var(--header-height));
-}
+  }
 
-nav a {
+  nav a {
     width: 100%;
     padding: 1rem 1.25rem;
     text-align: center;
     font-weight: 700;
     color: #eef4ff;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
+  }
 
-nav a:active {
+  nav a:active {
     background: rgba(255, 255, 255, 0.08);
-}
+  }
 
-/* Nav group dropdown (mobile) */
-.nav-group {
+  /* Nav group dropdown (mobile) */
+  .nav-group {
     width: 100%;
-}
+  }
 
-.nav-group-btn {
+  .nav-group-btn {
     width: 100%;
     padding: 1rem 1.25rem;
     text-align: center;
@@ -131,31 +148,31 @@ nav a:active {
     justify-content: center;
     gap: 0.35em;
     cursor: pointer;
-}
+  }
 
-.nav-group-btn:active {
+  .nav-group-btn:active {
     background: rgba(255, 255, 255, 0.08);
-}
+  }
 
-.nav-chevron {
+  .nav-chevron {
     flex-shrink: 0;
     transition: transform 0.2s ease;
-}
+  }
 
-.nav-group-btn[aria-expanded="true"] .nav-chevron {
+  .nav-group-btn[aria-expanded="true"] .nav-chevron {
     transform: rotate(180deg);
-}
+  }
 
-.nav-group-menu {
+  .nav-group-menu {
     display: none;
     flex-direction: column;
-}
+  }
 
-.nav-group-menu.is-open {
+  .nav-group-menu.is-open {
     display: flex;
-}
+  }
 
-.nav-group-menu a {
+  .nav-group-menu a {
     width: 100%;
     padding: 0.75rem 2.5rem;
     font-size: 0.88rem;
@@ -164,160 +181,160 @@ nav a:active {
     background: rgba(255, 255, 255, 0.06);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     text-align: center;
-}
+  }
 
-.nav-group-menu a:active {
+  .nav-group-menu a:active {
     background: rgba(255, 255, 255, 0.12);
-}
+  }
 
-/* =====================================================
+  /* =====================================================
    8) DESKTOP (768px+)
    ===================================================== */
-@media (min-width: 768px) {
+  @media (min-width: 768px) {
     .nav-toggle {
-        display: none;
+      display: none;
     }
 
     nav {
-        position: static;
-        width: auto;
-        height: auto;
-        overflow: visible;
-        background: transparent;
-        flex-direction: row;
-        gap: 1.3rem;
+      position: static;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      background: transparent;
+      flex-direction: row;
+      gap: 1.3rem;
     }
 
     :global(body.nav-open) nav {
-        height: auto;
+      height: auto;
     }
 
     nav a {
-        width: auto;
-        padding: 0;
-        border: 0;
-        color: var(--c-navy);
-        font-size: 0.95rem;
-        font-weight: 700;
-        opacity: 0.86;
+      width: auto;
+      padding: 0;
+      border: 0;
+      color: var(--c-navy);
+      font-size: 0.95rem;
+      font-weight: 700;
+      opacity: 0.86;
     }
 
     /* Nav dropdown (desktop) */
     .nav-group {
-        width: auto;
-        position: relative;
+      width: auto;
+      position: relative;
     }
 
     .nav-group-btn {
-        width: auto;
-        padding: 0;
-        border: 0;
-        color: var(--c-navy);
-        font-size: 0.95rem;
-        font-weight: 700;
-        opacity: 0.86;
-        background: transparent;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.25em;
+      width: auto;
+      padding: 0;
+      border: 0;
+      color: var(--c-navy);
+      font-size: 0.95rem;
+      font-weight: 700;
+      opacity: 0.86;
+      background: transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25em;
     }
 
     .nav-group-menu {
-        position: absolute;
-        top: calc(100% + 0.5rem);
-        left: 50%;
-        transform: translateX(-50%);
-        min-width: 190px;
-        flex-direction: column;
-        background: var(--c-surface);
-        border: 1px solid var(--c-border);
-        border-radius: var(--radius-md);
-        box-shadow: var(--shadow-md);
-        z-index: 200;
-        overflow: clip;
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 190px;
+      flex-direction: column;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      z-index: 200;
+      overflow: clip;
     }
 
     .nav-group-menu.is-open {
-        display: flex;
+      display: flex;
     }
 
     .nav-group-menu a {
-        width: auto;
-        padding: 0.6rem 1.1rem;
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--c-navy);
-        background: transparent;
-        border: 0;
-        text-align: left;
-        display: block;
-        white-space: nowrap;
+      width: auto;
+      padding: 0.6rem 1.1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--c-navy);
+      background: transparent;
+      border: 0;
+      text-align: left;
+      display: block;
+      white-space: nowrap;
     }
 
     @media (hover: hover) {
-        nav a:hover {
-            opacity: 1;
-        }
+      nav a:hover {
+        opacity: 1;
+      }
 
-        .nav-group-btn:hover {
-            opacity: 1;
-        }
+      .nav-group-btn:hover {
+        opacity: 1;
+      }
 
-        .nav-group-menu a:hover {
-            background: var(--c-bg);
-            color: var(--c-cyan);
-        }
+      .nav-group-menu a:hover {
+        background: var(--c-bg);
+        color: var(--c-cyan);
+      }
     }
-}
+  }
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener("DOMContentLoaded", () => {
     // --- Mobile Nav Toggle Logic ---
-    const navToggle = document.querySelector('.nav-toggle');
+    const navToggle = document.querySelector(".nav-toggle");
     const body = document.body;
 
     if (navToggle) {
-        navToggle.addEventListener('click', () => {
-            // Toggles a class on the body to handle state
-            body.classList.toggle('nav-open');
-        });
+      navToggle.addEventListener("click", () => {
+        // Toggles a class on the body to handle state
+        body.classList.toggle("nav-open");
+      });
 
-        // Close menu when a link is clicked
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                body.classList.remove('nav-open');
-                closeAllNavDropdowns();
-            });
+      // Close menu when a link is clicked
+      document.querySelectorAll("nav a").forEach((link) => {
+        link.addEventListener("click", () => {
+          body.classList.remove("nav-open");
+          closeAllNavDropdowns();
         });
+      });
     }
 
     // --- Nav Group Dropdown Logic ---
     function closeAllNavDropdowns() {
-        document.querySelectorAll('.nav-group-btn').forEach(btn => {
-            btn.setAttribute('aria-expanded', 'false');
-            const menuId = btn.getAttribute('aria-controls');
-            const menu = menuId ? document.getElementById(menuId) : null;
-            if (menu) menu.classList.remove('is-open');
-        });
+      document.querySelectorAll(".nav-group-btn").forEach((btn) => {
+        btn.setAttribute("aria-expanded", "false");
+        const menuId = btn.getAttribute("aria-controls");
+        const menu = menuId ? document.getElementById(menuId) : null;
+        if (menu) menu.classList.remove("is-open");
+      });
     }
 
-    document.querySelectorAll('.nav-group-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const expanded = btn.getAttribute('aria-expanded') === 'true';
-            const menuId = btn.getAttribute('aria-controls');
-            const menu = menuId ? document.getElementById(menuId) : null;
-            closeAllNavDropdowns();
-            if (!expanded) {
-                btn.setAttribute('aria-expanded', 'true');
-                if (menu) menu.classList.add('is-open');
-            }
-            e.stopPropagation();
-        });
+    document.querySelectorAll(".nav-group-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        const menuId = btn.getAttribute("aria-controls");
+        const menu = menuId ? document.getElementById(menuId) : null;
+        closeAllNavDropdowns();
+        if (!expanded) {
+          btn.setAttribute("aria-expanded", "true");
+          if (menu) menu.classList.add("is-open");
+        }
+        e.stopPropagation();
+      });
     });
 
-    document.addEventListener('click', () => {
-        closeAllNavDropdowns();
+    document.addEventListener("click", () => {
+      closeAllNavDropdowns();
     });
-});
+  });
 </script>

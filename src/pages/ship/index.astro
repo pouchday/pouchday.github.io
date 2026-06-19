@@ -1,0 +1,645 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="Ship a Package">
+  <h1>Ship a Package</h1>
+  <p>Complete these steps to send supplies to your missionary.</p>
+
+  <!-- Step indicator -->
+  <div class="step-indicator">
+    <div class="step-dot active" data-step="1">1</div>
+    <div class="step-line"></div>
+    <div class="step-dot" data-step="2">2</div>
+    <div class="step-line"></div>
+    <div class="step-dot" data-step="3">3</div>
+  </div>
+
+  <form id="shop-wizard-form" enctype="multipart/form-data">
+    <!-- Hidden FormSubmit fields -->
+    <input type="hidden" name="_captcha" value="false" />
+    <input type="hidden" name="_subject" value="New Shipping Manifest" />
+    <input type="hidden" name="_next" id="next_redirect" />
+    <input type="hidden" name="order_uuid" id="order_uuid" />
+
+    <!-- Step 1: Package Details -->
+    <div class="step-panel" id="step-1">
+      <h2>Step 1: Package Details</h2>
+
+      <div class="form-group">
+        <label>
+          Missionary Photo
+          <span
+            class="upload-tooltip"
+            data-tip="Accepted: JPG, PNG, GIF, WebP, HEIC. Max 10MB per file."
+            >?</span
+          >
+        </label>
+        <p class="field-hint">
+          Help travelers connect with the people they're serving. Optional but
+          encouraged!
+        </p>
+        <input type="file" name="missionary_photo" accept="image/*" />
+      </div>
+
+      <div id="items-container">
+        <div class="form-group">
+          <label>
+            Item Photos
+            <span
+              class="upload-tooltip"
+              data-tip="Accepted: JPG, PNG, GIF, WebP, HEIC. Max 10MB per file."
+              >?</span
+            >
+          </label>
+          <input
+            type="file"
+            name="item_photo_1"
+            accept="image/*"
+            multiple
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button type="button" class="btn-add-item" id="add-item-btn">
+          + Add Another Item
+        </button>
+      </div>
+
+      <div class="form-group">
+        <label>Package Weight (lbs)</label>
+        <input
+          type="number"
+          name="weight"
+          inputmode="numeric"
+          placeholder="e.g. 25"
+          required
+          id="field-weight"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Mission Destination</label>
+        <select name="mission" required id="field-mission">
+          <option value="" disabled selected>Loading missions...</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Mission Office Address</label>
+        <input
+          type="text"
+          name="office_address"
+          id="field-office-address"
+          placeholder="Office address"
+          required
+          disabled
+        />
+      </div>
+
+      <button type="button" class="btn-primary" id="next-step-1">Next</button>
+    </div>
+
+    <!-- Step 2: Your Information -->
+    <div class="step-panel" id="step-2" hidden>
+      <h2>Step 2: Your Information</h2>
+
+      <div class="form-group">
+        <label>Your Email</label>
+        <input
+          type="email"
+          name="customer_email"
+          placeholder="you@example.com"
+          required
+        />
+      </div>
+
+      <div class="payment-section">
+        <h3>Payment</h3>
+        <p class="field-hint">Payment processing coming soon via Stripe</p>
+        <div class="stripe-placeholder">
+          <div class="stripe-card disabled">
+            <input type="text" placeholder="Card number" disabled />
+            <div class="card-details">
+              <input type="text" placeholder="MM / YY" disabled />
+              <input type="text" placeholder="CVC" disabled />
+            </div>
+          </div>
+          <p class="payment-note">
+            Secure payment processing will be available soon
+          </p>
+        </div>
+      </div>
+
+      <div class="step-nav">
+        <button type="button" class="btn-secondary" id="back-step-2"
+          >Back</button
+        >
+        <button type="button" class="btn-primary" id="next-step-2">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Shipment & Delivery -->
+    <div class="step-panel" id="step-3" hidden>
+      <h2>Step 3: Shipment & Delivery</h2>
+
+      <div class="order-summary">
+        <h3>Order Summary</h3>
+        <div class="summary-item">
+          <span>Order ID:</span>
+          <span id="summary-order-id">—</span>
+        </div>
+        <div class="summary-item">
+          <span>Destination:</span>
+          <span id="summary-destination">—</span>
+        </div>
+        <div class="summary-item">
+          <span>Weight:</span>
+          <span id="summary-weight">—</span>
+        </div>
+        <div class="summary-item">
+          <span>Estimated Arrival:</span>
+          <span id="summary-arrival">—</span>
+        </div>
+      </div>
+
+      <div class="step-nav">
+        <button type="button" class="btn-secondary" id="back-step-3"
+          >Back</button
+        >
+        <button type="submit" class="btn-primary">Confirm Order</button>
+      </div>
+    </div>
+  </form>
+</Layout>
+
+<style>
+  .step-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+    gap: 0.5rem;
+  }
+
+  .step-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: var(--c-muted);
+    background: var(--c-border);
+    transition: all 0.2s ease;
+  }
+
+  .step-dot.active {
+    background: var(--c-cyan);
+    color: white;
+  }
+
+  .step-dot.done {
+    background: var(--c-navy);
+    color: white;
+  }
+
+  .step-line {
+    width: 60px;
+    height: 2px;
+    background: var(--c-border);
+  }
+
+  .field-hint {
+    font-size: 0.88rem;
+    color: var(--c-muted);
+    font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+
+  .btn-add-item {
+    background: transparent;
+    border: 2px dashed var(--c-border);
+    color: var(--c-navy);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+    width: 100%;
+  }
+
+  .btn-add-item:hover {
+    border-color: var(--c-cyan);
+    color: var(--c-cyan);
+  }
+
+  .payment-section {
+    margin: 2rem 0;
+  }
+
+  .stripe-placeholder {
+    opacity: 0.6;
+  }
+
+  .stripe-card {
+    border: 2px solid var(--c-border);
+    border-radius: 12px;
+    padding: 1rem;
+    background: #f9fbff;
+  }
+
+  .stripe-card input {
+    background: transparent;
+    border: none;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .payment-note {
+    font-size: 0.88rem;
+    text-align: center;
+    margin-top: 0.5rem;
+    color: var(--c-muted);
+  }
+
+  .order-summary {
+    background: linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .summary-item:last-child {
+    margin-bottom: 0;
+    font-weight: 700;
+    color: var(--c-navy);
+  }
+
+  .step-nav {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border: 2px solid var(--c-border);
+    color: var(--c-navy);
+    border-radius: 12px;
+    min-height: 48px;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    font-weight: 800;
+    transition: all 0.2s ease;
+    flex: 1;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--c-navy);
+  }
+
+  .item-row {
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .item-input-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end;
+  }
+
+  .item-input-row input {
+    flex: 1;
+  }
+
+  .btn-delete-item {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 768px) {
+    .step-nav .btn-secondary,
+    .step-nav .btn-primary {
+      flex: 0 1 150px;
+    }
+  }
+</style>
+
+<script>
+  // Shop wizard functionality
+  let currentStep = 1;
+  let totalSteps = 3;
+  let itemCount = 1;
+  let missionAddresses = {};
+
+  // Step navigation
+  function showStep(n) {
+    document.querySelectorAll(".step-panel").forEach((panel, i) => {
+      panel.hidden = i + 1 !== n;
+    });
+
+    // Update step indicator
+    document.querySelectorAll(".step-dot").forEach((dot, i) => {
+      dot.classList.toggle("active", i + 1 === n);
+      dot.classList.toggle("done", i + 1 < n);
+    });
+  }
+
+  function nextStep() {
+    if (currentStep < totalSteps) {
+      currentStep++;
+      showStep(currentStep);
+      window.scrollTo(0, 0);
+
+      // Update summary if moving to step 3
+      if (currentStep === 3) {
+        updateOrderSummary();
+      }
+    }
+  }
+
+  function prevStep() {
+    if (currentStep > 1) {
+      currentStep--;
+      showStep(currentStep);
+      window.scrollTo(0, 0);
+    }
+  }
+
+  // Add item functionality
+  function addItemField() {
+    itemCount++;
+    const container = document.getElementById("items-container");
+    const div = document.createElement("div");
+    div.className = "form-group item-row";
+    div.innerHTML = `
+        <label>Item ${itemCount} Photos <span class="upload-tooltip" data-tip="Accepted: JPG, PNG, GIF, WebP, HEIC. Max 10MB per file.">?</span></label>
+        <div class="item-input-row">
+            <input type="file" name="item_photo_${itemCount}" accept="image/*" multiple>
+            <button type="button" class="btn-delete-item" onclick="this.closest('.item-row').remove()">Remove</button>
+        </div>
+    `;
+    container.appendChild(div);
+  }
+
+  // Load missions from Google Sheets
+  function loadMissions() {
+    const missionSelect = document.getElementById("field-mission");
+    const officeAddressInput = document.getElementById("field-office-address");
+    const SHIP_TSV_URL =
+      "https://docs.google.com/spreadsheets/d/1pNKEJRMOZY2yTuOt91vOZ9qeRW5S9oVaF9NnkLsoEOc/export?gid=0&format=tsv";
+
+    function parseTSVRows(text) {
+      const lines = text.trim().split("\n");
+      const headers = lines[0].split("\t").map((h) => h.trim());
+      const rows = lines
+        .slice(1)
+        .map((line) => line.split("\t").map((c) => c.trim()));
+      return { headers, rows };
+    }
+
+    function findHeaderIndex(headers, keywords) {
+      const idx = headers.findIndex((h) =>
+        keywords.some((k) => h.toLowerCase().includes(k)),
+      );
+      return idx >= 0 ? idx : 0;
+    }
+
+    fetch(SHIP_TSV_URL)
+      .then((res) => res.text())
+      .then((text) => {
+        const { headers, rows } = parseTSVRows(text);
+
+        if (!rows.length) {
+          missionSelect.innerHTML =
+            '<option value="" disabled selected>No missions available</option>';
+          return;
+        }
+
+        const nameIdx = findHeaderIndex(headers, ["mission", "name"]);
+        const activeIdx = headers.findIndex((h, i) => {
+          if (i === nameIdx) return false;
+          return ["active", "available", "accepting"].some((k) =>
+            h.toLowerCase().includes(k),
+          );
+        });
+        const addressIdx = headers.findIndex((h) =>
+          h.toLowerCase().includes("address"),
+        );
+
+        missionSelect.innerHTML =
+          '<option value="" disabled selected>Select a mission…</option>';
+        missionAddresses = {};
+
+        rows.forEach((cols) => {
+          const missionName = cols[nameIdx];
+          if (!missionName) return;
+
+          const rawActive = activeIdx >= 0 ? cols[activeIdx] : "";
+          const isAvailable =
+            rawActive === "" || rawActive.toLowerCase() !== "false";
+
+          if (addressIdx >= 0 && cols[addressIdx]) {
+            missionAddresses[missionName] = cols[addressIdx];
+          }
+
+          const option = document.createElement("option");
+          option.value = missionName;
+          option.textContent = isAvailable
+            ? missionName
+            : `${missionName} (Unavailable)`;
+          option.disabled = !isAvailable;
+          missionSelect.appendChild(option);
+        });
+      })
+      .catch(() => {
+        missionSelect.innerHTML =
+          '<option value="" disabled selected>Unable to load missions</option>';
+      });
+  }
+
+  function updateOrderSummary() {
+    const uuid = generateUuid();
+    const weight = document.getElementById("field-weight").value;
+    const destination = document.getElementById("field-mission").value;
+
+    // Set order UUID for form submission
+    document.getElementById("order_uuid").value = uuid;
+
+    // Update summary
+    document.getElementById("summary-order-id").textContent = uuid
+      .slice(0, 8)
+      .toUpperCase();
+    document.getElementById("summary-destination").textContent =
+      destination || "—";
+    document.getElementById("summary-weight").textContent = weight
+      ? `${weight} lbs`
+      : "—";
+
+    // Calculate estimated arrival (14 business days from now)
+    const today = new Date();
+    const businessDays = 14;
+    let addedDays = 0;
+    let currentDate = new Date(today);
+
+    while (addedDays < businessDays) {
+      currentDate.setDate(currentDate.getDate() + 1);
+      if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+        // Skip weekends
+        addedDays++;
+      }
+    }
+
+    document.getElementById("summary-arrival").textContent =
+      currentDate.toLocaleDateString();
+  }
+
+  function generateUuid() {
+    if (window.crypto && typeof window.crypto.randomUUID === "function") {
+      return window.crypto.randomUUID();
+    }
+
+    if (window.crypto && typeof window.crypto.getRandomValues === "function") {
+      const bytes = new Uint8Array(16);
+      window.crypto.getRandomValues(bytes);
+      bytes[6] = (bytes[6] & 0x0f) | 0x40;
+      bytes[8] = (bytes[8] & 0x3f) | 0x80;
+      const hex = Array.from(bytes, (b) =>
+        b.toString(16).padStart(2, "0"),
+      ).join("");
+      return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+    }
+
+    return `${Date.now()}-${Math.random().toString(16).slice(2, 10)}`;
+  }
+
+  // Event listeners
+  document.addEventListener("DOMContentLoaded", () => {
+    // Load missions
+    loadMissions();
+
+    // Mission selection handler
+    document.getElementById("field-mission").addEventListener("change", (e) => {
+      const selected = e.target.value;
+      const officeAddressInput = document.getElementById(
+        "field-office-address",
+      );
+      officeAddressInput.disabled = false;
+      officeAddressInput.value = missionAddresses[selected] || "";
+    });
+
+    // Add item button
+    document
+      .getElementById("add-item-btn")
+      .addEventListener("click", addItemField);
+
+    // Step navigation buttons
+    document.getElementById("next-step-1").addEventListener("click", () => {
+      // Validate step 1 fields
+      const requiredFields = [
+        "item_photo_1",
+        "weight",
+        "mission",
+        "office_address",
+      ];
+      let isValid = true;
+
+      requiredFields.forEach((fieldName) => {
+        const field = document.querySelector(`[name="${fieldName}"]`);
+        if (!field.value) {
+          isValid = false;
+          field.focus();
+          return;
+        }
+      });
+
+      if (isValid) {
+        nextStep();
+      }
+    });
+
+    document.getElementById("next-step-2").addEventListener("click", () => {
+      const emailField = document.querySelector('[name="customer_email"]');
+      if (emailField.value) {
+        nextStep();
+      } else {
+        emailField.focus();
+      }
+    });
+
+    document.getElementById("back-step-2").addEventListener("click", prevStep);
+    document.getElementById("back-step-3").addEventListener("click", prevStep);
+
+    // Form submission
+    document
+      .getElementById("shop-wizard-form")
+      .addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        submitBtn.textContent = "Processing...";
+        submitBtn.disabled = true;
+
+        // Set success URL
+        const uuid = document.getElementById("order_uuid").value;
+        const weight = document.getElementById("field-weight").value;
+        const destination = document.getElementById("field-mission").value;
+        const successUrl = `${window.location.origin}/shop/success?id=${uuid}&weight=${weight}&dest=${encodeURIComponent(destination)}`;
+        document.getElementById("next_redirect").value = successUrl;
+
+        // Prepare form data with renamed files
+        const formData = new FormData(e.target);
+        const uniqueId = Date.now();
+
+        Array.from(formData.keys()).forEach((key) => {
+          const file = formData.get(key);
+          if (file instanceof File && file.name) {
+            const extension = file.name.split(".").pop() || "jpg";
+            const newName = `${key}_${uniqueId}.${extension}`;
+            const renamedFile = new File([file], newName, { type: file.type });
+            formData.set(key, renamedFile);
+          }
+        });
+
+        // Submit to FormSubmit
+        fetch("https://formsubmit.co/pouchday-dev@proton.me", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            window.location.href = successUrl;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Upload failed.");
+            submitBtn.textContent = "Try Again";
+            submitBtn.disabled = false;
+          });
+      });
+  });
+</script>
