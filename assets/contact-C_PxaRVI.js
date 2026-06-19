@@ -1,0 +1,1 @@
+import"./header-Dm00x53R.js";var e=document.getElementById(`contact-next`),t=document.getElementById(`contact-success`);e&&(e.value=`${window.location.origin}/contact/?sent=1`),new URLSearchParams(window.location.search).get(`sent`)===`1`&&t&&(t.hidden=!1);

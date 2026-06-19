@@ -1,0 +1,1 @@
+import"./header-Dm00x53R.js";var e=document.getElementById(`donate-next`);e&&(e.value=`${window.location.origin}/#socials-footer`);
