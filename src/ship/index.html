@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script src="./ship.js" type="module"></script>
+    <load src="../partials/head.html" />
+    <title>Ship a Package | PouchDay</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./ship.css" />
+  </head>
+  <body>
+    <load src="../partials/header.html" />
+    <main x-data="shipWizard">
+      <h1>Ship a Package</h1>
+      <p>Complete these steps to send supplies to your missionary.</p>
+
+      <div class="step-indicator">
+        <template x-for="step in 4">
+          <div style="display: flex; align-items: center; gap: 0.5rem">
+            <div
+              class="step-dot"
+              :class="{ 'active': currentStep === step, 'done': currentStep > step }"
+              x-text="step"
+            ></div>
+            <div x-show="step < 4" class="step-line"></div>
+          </div>
+        </template>
+      </div>
+
+      <div class="modal-backdrop" x-show="showVideoModal" x-cloak x-transition>
+        <div class="modal-content" @click.away="showVideoModal = false">
+          <button
+            type="button"
+            class="close-modal-btn"
+            @click="showVideoModal = false"
+          >
+            &times;
+          </button>
+          <h3>How to Pack Tutorial</h3>
+          <div class="video-container">
+            <iframe
+              width="100%"
+              height="315"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
+      <form id="shop-wizard-form" @submit.prevent="submitForm">
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_subject" value="New Shipping Manifest" />
+        <input type="hidden" name="_next" :value="nextRedirectUrl" />
+        <input type="hidden" name="order_uuid" :value="orderUuid" />
+
+        <div class="step-panel" x-show="currentStep === 1">
+          <div class="sticky-header" x-show="missionaryName">
+            <p>Shipping for: <strong x-text="missionaryName"></strong></p>
+          </div>
+
+          <h2>Step 1: Package Details</h2>
+
+          <div class="top-action-row">
+            <button
+              type="button"
+              class="btn-info"
+              @click="window.open('/restrictions/', '_blank')"
+            >
+              <i class="fa-solid to-list"></i> View Shipping Restrictions
+            </button>
+            <button
+              type="button"
+              class="btn-info"
+              @click="showVideoModal = true"
+            >
+              <i class="fa-solid fa-play"></i> Watch Tutorial Video
+            </button>
+          </div>
+
+          <div class="form-group">
+            <label>Missionary Full Name</label>
+            <input
+              type="text"
+              name="missionary_name"
+              x-model="missionaryName"
+              placeholder="Elder or Sister Name"
+              :required="currentStep === 1"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>
+              Missionary Photo
+              <span
+                class="upload-tooltip"
+                data-tip="Accepted: JPG, PNG, GIF, WebP, HEIC. Max 10MB per file."
+                >?</span
+              >
+            </label>
+            <p class="field-hint">
+              Help travelers connect with the people they're serving. Optional
+              but encouraged!
+            </p>
+            <input type="file" name="missionary_photo" accept="image/*" />
+          </div>
+
+          <div class="form-group">
+            <label>Mission Destination</label>
+            <select
+              name="mission"
+              x-model="selectedMission"
+              @change="handleMissionChange"
+              :required="currentStep === 1"
+            >
+              <option value="" disabled>Select a mission…</option>
+              <template x-for="m in missionsList">
+                <option
+                  :value="m.name"
+                  :disabled="!m.available"
+                  x-text="m.available ? m.name : m.name + ' (Unavailable)'"
+                ></option>
+              </template>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Mission Office Address</label>
+            <input
+              type="text"
+              name="office_address"
+              x-model="officeAddress"
+              placeholder="Office address"
+              :required="currentStep === 1"
+              disabled
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Mission Office Phone Number</label>
+            <input
+              type="tel"
+              name="office_phone"
+              placeholder="e.g. +1 (801) 555-0199"
+              :required="currentStep === 1"
+            />
+          </div>
+
+          <div id="items-container">
+            <template x-for="(item, index) in itemRows" :key="item.id">
+              <div class="form-group item-row">
+                <label x-text="'Item ' + (index + 1) + ' Photos'"></label>
+                <div class="item-input-row">
+                  <input
+                    type="file"
+                    :name="'item_photo_' + item.id"
+                    accept="image/*"
+                    multiple
+                    :required="currentStep === 1 && index === 0"
+                  />
+                  <button
+                    type="button"
+                    class="btn-delete-item-icon"
+                    x-show="itemRows.length > 1"
+                    @click="removeItemField(item.id)"
+                    title="Remove item"
+                  >
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </div>
+              </div>
+            </template>
+          </div>
+
+          <div class="form-group">
+            <button type="button" class="btn-add-item" @click="addItemField">
+              + Add Another Item
+            </button>
+          </div>
+
+          <div class="form-group">
+            <label>Package Weight (lbs)</label>
+            <input
+              type="number"
+              name="weight"
+              x-model="packageWeight"
+              inputmode="numeric"
+              placeholder="e.g. 25"
+              :required="currentStep === 1"
+            />
+          </div>
+
+          <button type="button" class="btn-primary" @click="validateAndGoTo(2)">
+            Next
+          </button>
+        </div>
+
+        <div class="step-panel" x-show="currentStep === 2" x-cloak>
+          <h2>Step 2: Order Summary</h2>
+
+          <div class="order-summary">
+            <h3>Summary Draft</h3>
+            <div class="summary-item">
+              <span>Missionary Name:</span>
+              <strong x-text="missionaryName || '—'"></strong>
+            </div>
+            <div class="summary-item">
+              <span>Destination:</span>
+              <strong x-text="selectedMission || '—'"></strong>
+            </div>
+            <div class="summary-item">
+              <span>Weight:</span>
+              <strong
+                x-text="packageWeight ? packageWeight + ' lbs' : '—'"
+              ></strong>
+            </div>
+            <div class="summary-item pricing-tier">
+              <span>Estimated Price:</span>
+              <strong x-text="'$' + calculatePrice()"></strong>
+            </div>
+          </div>
+
+          <div class="step-nav">
+            <button type="button" class="btn-secondary" @click="prevStep">
+              Back
+            </button>
+            <button type="button" class="btn-primary" @click="currentStep = 3">
+              Next
+            </button>
+          </div>
+        </div>
+
+        <div class="step-panel" x-show="currentStep === 3" x-cloak>
+          <h2>Step 3: Your Information & Payment</h2>
+
+          <div class="form-group">
+            <label>Your Email</label>
+            <input
+              type="email"
+              name="customer_email"
+              x-model="customerEmail"
+              placeholder="you@example.com"
+              :required="currentStep === 3"
+            />
+          </div>
+
+          <div class="payment-section">
+            <h3>Payment</h3>
+            <p class="field-hint">Payment processing coming soon via Stripe</p>
+            <div class="stripe-placeholder">
+              <div class="stripe-card disabled">
+                <input type="text" placeholder="Card number" disabled />
+                <div class="card-details">
+                  <input type="text" placeholder="MM / YY" disabled />
+                  <input type="text" placeholder="CVC" disabled />
+                </div>
+              </div>
+              <p class="payment-note">
+                Secure payment processing will be available soon
+              </p>
+            </div>
+          </div>
+
+          <div class="step-nav">
+            <button type="button" class="btn-secondary" @click="prevStep">
+              Back
+            </button>
+            <button
+              type="button"
+              class="btn-primary"
+              @click="validateAndGoTo(4)"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+
+        <div class="step-panel" x-show="currentStep === 4" x-cloak>
+          <h2>Step 4: Shipment & Delivery Confirmation</h2>
+
+          <div class="fulfillment-card">
+            <h3>
+              <i class="fa-solid fa-bag-shopping"></i> Preparation Instructions
+            </h3>
+            <ol>
+              <li>
+                Place all your packed contents carefully inside a heavy-duty
+                Ziploc bag.
+              </li>
+              <li>
+                Once you complete this layout execution below, you will receive
+                your dynamic packing label printable file.
+              </li>
+              <li>
+                Alternatively, write your <strong>Sender Name</strong> and the
+                Order Tracking Reference ID (shown below) cleanly across the
+                front face of the Ziploc bag using an indelible marker.
+              </li>
+            </ol>
+          </div>
+
+          <div class="order-summary">
+            <h3>Final Overview</h3>
+            <div class="summary-item">
+              <span>Order ID Reference:</span>
+              <strong x-text="orderUuid.slice(0, 8).toUpperCase()"></strong>
+            </div>
+            <div class="summary-item">
+              <span>Destination Office:</span>
+              <strong x-text="selectedMission"></strong>
+            </div>
+            <div class="summary-item">
+              <span>Calculated Freight Base:</span>
+              <strong x-text="packageWeight + ' lbs'"></strong>
+            </div>
+          </div>
+
+          <div class="step-nav">
+            <button
+              type="button"
+              class="btn-secondary"
+              :disabled="isSubmitting"
+              @click="prevStep"
+            >
+              Back
+            </button>
+            <button
+              type="submit"
+              class="btn-primary"
+              :disabled="isSubmitting"
+              x-text="isSubmitting ? 'Processing...' : 'Confirm Order'"
+            ></button>
+          </div>
+        </div>
+      </form>
+    </main>
+    <load src="../partials/footer.html" />
+  </body>
+</html>

@@ -1,0 +1,200 @@
+/* restrictions.css */
+
+.restrictions-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.restrictions-intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.restrictions-intro h1 {
+  font-size: 2.5rem;
+  color: var(--c-navy, #0f172a);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.restrictions-intro h1 i {
+  color: #eab308;
+}
+
+.restrictions-intro .subtitle {
+  font-size: 1.1rem;
+  color: var(--c-muted, #64748b);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Red Threat Callout Banner */
+.alert-banner {
+  display: flex;
+  background-color: #fef2f2;
+  border-left: 5px solid #ef4444;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 3rem;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.alert-icon i {
+  font-size: 1.5rem;
+  color: #ef4444;
+}
+
+.alert-text h3 {
+  margin: 0 0 0.25rem 0;
+  color: #991b1b;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.alert-text p {
+  margin: 0;
+  color: #7f1d1d;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Card Presentation Architecture Grid */
+.restrictions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.restriction-card {
+  background: #ffffff;
+  border: 1px solid var(--c-border, #e2e8f0);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.restriction-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-header i {
+  font-size: 1.35rem;
+}
+
+.card-header h2 {
+  font-size: 1.25rem;
+  margin: 0;
+  color: var(--c-navy, #0f172a);
+  font-weight: 700;
+}
+
+.card-desc {
+  font-size: 0.9rem;
+  color: var(--c-muted, #64748b);
+  margin: 0 0 1.25rem 0;
+  line-height: 1.4;
+}
+
+/* Custom Card Color Accents */
+.hazard-flammable .card-header i {
+  color: #f97316;
+}
+.hazard-flammable {
+  border-top: 4px solid #f97316;
+}
+
+.hazard-battery .card-header i {
+  color: #3b82f6;
+}
+.hazard-battery {
+  border-top: 4px solid #3b82f6;
+}
+
+.hazard-perishable .card-header i {
+  color: #22c55e;
+}
+.hazard-perishable {
+  border-top: 4px solid #22c55e;
+}
+
+.hazard-weapons .card-header i {
+  color: #64748b;
+}
+.hazard-weapons {
+  border-top: 4px solid #64748b;
+}
+
+/* Item List Bullet Styles */
+.items-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  list-style-type: none;
+}
+
+.items-list li {
+  position: relative;
+  font-size: 0.95rem;
+  color: #334155;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.items-list li::before {
+  content: "•";
+  color: #ef4444; /* Red dots show these items are banned */
+  font-weight: bold;
+  display: inline-block;
+  width: 1rem;
+  margin-left: -1rem;
+}
+
+/* Bottom Help Layout */
+.restrictions-footer {
+  text-align: center;
+  border-top: 1px solid var(--c-border, #e2e8f0);
+  padding-top: 2.5rem;
+}
+
+.restrictions-footer p {
+  color: var(--c-muted, #64748b);
+  margin-bottom: 1rem;
+}
+
+.btn-contact-support {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--c-navy, #0f172a);
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.btn-contact-support:hover {
+  background-color: var(--c-cyan, #06b6d4);
+}

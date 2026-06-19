@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <load src="../../partials/head.html" />
+    <title>Order Confirmed | PouchDay</title>
+  </head>
+  <body>
+    <load src="../../partials/header.html" />
+    <main class="shop-success-main">
+      <div class="shop-success-check">✓</div>
+
+      <h1>Order Confirmed!</h1>
+      <p>Your shipping request has been submitted successfully.</p>
+
+      <div class="card shop-success-details">
+        <p>
+          <strong>Order ID:</strong> <span id="display-id">Loading...</span>
+        </p>
+        <p>
+          <strong>Destination:</strong>
+          <span id="display-dest">Loading...</span>
+        </p>
+        <p>
+          <strong>Weight:</strong> <span id="display-weight">Loading...</span>
+        </p>
+      </div>
+
+      <button id="download-pdf-btn" class="btn-primary shop-success-download">
+        Download Packing Slip (PDF)
+      </button>
+
+      <p class="shop-success-note">
+        Please print this slip and place it in a ziplock bag with the items.
+      </p>
+
+      <div class="next-steps">
+        <h3>What's Next?</h3>
+        <p>
+          Our team will review your request and contact you within 24 hours with
+          next steps.
+        </p>
+        <p>Need help? <a href="/contact/">Contact customer support</a></p>
+      </div>
+    </main>
+    <load src="../../partials/footer.html" />
+  </body>
+</html>
+
+<style>
+  .shop-success-main {
+    text-align: center;
+    padding-top: 3rem;
+  }
+
+  .shop-success-check {
+    font-size: 5rem;
+    color: #5cb85c;
+    margin-bottom: 1rem;
+  }
+
+  .shop-success-details {
+    max-width: 400px;
+    margin: 2rem auto;
+    text-align: left;
+  }
+
+  .shop-success-download {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .shop-success-note {
+    margin-top: 2rem;
+    color: var(--c-muted);
+  }
+
+  .next-steps {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .next-steps h3 {
+    color: var(--c-navy);
+    margin-bottom: 1rem;
+  }
+
+  .next-steps a {
+    color: var(--c-cyan);
+    font-weight: 700;
+  }
+</style>
+
+<script
+  type="module"
+  src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+></script>
+<script type="module">
+  const params = new URLSearchParams(window.location.search);
+  const orderId = params.get("id") || "UNKNOWN";
+  const dest = params.get("dest") || "Unknown";
+  const weight = params.get("weight") || "0";
+
+  document.getElementById("display-id").textContent = orderId
+    .slice(0, 8)
+    .toUpperCase();
+  document.getElementById("display-dest").textContent = dest;
+  document.getElementById("display-weight").textContent = `${weight} lbs`;
+
+  async function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(22);
+    doc.setTextColor(31, 46, 92);
+    doc.text("PouchDay - Shipping Label", 20, 20);
+
+    doc.setLineWidth(0.5);
+    doc.line(20, 25, 190, 25);
+
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
+
+    doc.text(`Order ID: ${orderId.slice(0, 8).toUpperCase()}`, 20, 40);
+    doc.text(`Destination: ${dest}`, 20, 50);
+    doc.text(`Package Weight: ${weight} lbs`, 20, 60);
+    doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 70);
+
+    doc.setFontSize(14);
+    doc.text("Shipping Instructions:", 20, 90);
+    doc.setFontSize(10);
+    doc.text("• Tape this label securely to your package", 20, 100);
+    doc.text("• Ensure package is sealed and contents are secure", 20, 110);
+    doc.text("• Drop off at designated PouchDay collection point", 20, 120);
+
+    doc.setDrawColor(0);
+    doc.rect(20, 140, 170, 40);
+    doc.setFontSize(12);
+    doc.text("Warehouse Use Only:", 25, 150);
+    doc.text("[ ] Verified Weight", 25, 165);
+    doc.text("[ ] Security Check", 100, 165);
+
+    doc.save(`PouchDay_Shipping_Label_${orderId.slice(0, 8)}.pdf`);
+  }
+
+  document
+    .getElementById("download-pdf-btn")
+    .addEventListener("click", downloadPDF);
+</script>

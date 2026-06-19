@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <load src="../partials/head.html" />
+    <title>Shipping Restrictions | PouchDay</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./restrictions.css" />
+  </head>
+  <body>
+    <load src="../partials/header.html" />
+
+    <main class="restrictions-container">
+      <div class="restrictions-intro">
+        <h1>
+          <i class="fa-solid fa-triangle-exclamation"></i> Shipping Restrictions
+        </h1>
+        <p class="subtitle">
+          Because packages travel with real passengers on standard commercial
+          flights, we must strictly adhere to TSA and international airline
+          safety regulations.
+        </p>
+      </div>
+
+      <div class="alert-banner">
+        <div class="alert-icon">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <div class="alert-text">
+          <h3>Strict Zero-Tolerance Policy</h3>
+          <p>
+            Any package containing items from the lists below will be flagged,
+            rejected, and will not be boarded onto the aircraft. Please
+            double-check your items before packing.
+          </p>
+        </div>
+      </div>
+
+      <div class="restrictions-grid">
+        <div class="restriction-card hazard-flammable">
+          <div class="card-header">
+            <i class="fa-solid fa-fire"></i>
+            <h2>Flammables & Aerosols</h2>
+          </div>
+          <p class="card-desc">
+            Pressurized cans or volatile liquids that could ignite under cargo
+            hold pressure changes.
+          </p>
+          <ul class="items-list">
+            <li>Aerosol sprays (deodorant, hairspray, body spray)</li>
+            <li>Nail polish and nail polish remover</li>
+            <li>Perfumes, colognes, and alcohol-based aftershaves</li>
+            <li>Lighters, matches, and lighter fluid</li>
+          </ul>
+        </div>
+
+        <div class="restriction-card hazard-battery">
+          <div class="card-header">
+            <i class="fa-solid fa-battery-full"></i>
+            <h2>Lithium Batteries & Tech</h2>
+          </div>
+          <p class="card-desc">
+            Loose lithium batteries are classified as severe fire hazards in
+            commercial air cargo holds.
+          </p>
+          <ul class="items-list">
+            <li>Power banks and external portable chargers</li>
+            <li>Loose or spare rechargeable batteries (AA/AAA lithium)</li>
+            <li>E-cigarettes and vape pens</li>
+            <li>Smart luggage tracking tags with non-removable batteries</li>
+          </ul>
+        </div>
+
+        <div class="restriction-card hazard-perishable">
+          <div class="card-header">
+            <i class="fa-solid fa-apple-whole"></i>
+            <h2>Perishables & Agriculture</h2>
+          </div>
+          <p class="card-desc">
+            Items subject to quick rot, spoiling, or strict international
+            customs quarantine protocols.
+          </p>
+          <ul class="items-list">
+            <li>Fresh fruits, vegetables, and meats</li>
+            <li>Homemade or unsealed snacks prone to bursting</li>
+            <li>Plants, seeds, and soil types</li>
+            <li>Liquids exceeding standard container structural thresholds</li>
+          </ul>
+        </div>
+
+        <div class="restriction-card hazard-weapons">
+          <div class="card-header">
+            <i class="fa-solid fa-shield-halved"></i>
+            <h2>Weapons & Sharps</h2>
+          </div>
+          <p class="card-desc">
+            Any item that can be interpreted or classified as a security threat
+            or hunting tool.
+          </p>
+          <ul class="items-list">
+            <li>Pocket knives, utility blades, and scissors</li>
+            <li>Self-defense sprays (pepper spray, mace)</li>
+            <li>Tools exceeding 7 inches in overall length</li>
+            <li>Toy or replica firearms</li>
+          </ul>
+        </div>
+      </div>
+
+      <footer class="restrictions-footer">
+        <p>
+          Still not entirely sure if an item is safe to put in your manifest?
+        </p>
+        <a href="mailto:support@pouchday.com" class="btn-contact-support">
+          <i class="fa-solid fa-envelope"></i> Ask Support Team
+        </a>
+      </footer>
+    </main>
+
+    <load src="../partials/footer.html" />
+  </body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <load src="../../../partials/head.html" />
+    <title>Request received! | PouchDay</title>
+  </head>
+  <body>
+    <load src="../../../partials/header.html" />
+    <main class="success-message">
+      <div class="success-icon">📦</div>
+
+      <h1>Request received!</h1>
+      <p>
+        Thanks for offering to help. Our team will check for packages headed
+        your way and reach out to you soon.
+      </p>
+
+      <div class="card success-card">
+        <h3>What's Next?</h3>
+        <ul>
+          <li>We'll review your travel details</li>
+          <li>
+            If we have packages for your destination, we'll contact you within
+            48 hours
+          </li>
+          <li>All shipping costs will be covered by PouchDay</li>
+          <li>You'll receive detailed instructions for pickup and delivery</li>
+        </ul>
+      </div>
+
+      <div class="card success-card">
+        <h3>Stay Connected</h3>
+        <p>
+          Follow us on social to see updates, needs, and future opportunities to
+          help.
+        </p>
+        <div class="social-links" aria-label="Social media links">
+          <a
+            class="social-link"
+            href="https://instagram.com/pouchday"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect>
+              <circle cx="12" cy="12" r="4"></circle>
+              <circle cx="17.5" cy="6.5" r="1"></circle>
+            </svg>
+            <span>Instagram</span>
+          </a>
+          <a
+            class="social-link"
+            href="https://facebook.com/pouchday"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M14 8h3V3h-3c-3 0-5 2-5 5v3H6v5h3v5h5v-5h3l1-5h-4V8c0-.7.3-1 1-1z"
+              ></path>
+            </svg>
+            <span>Facebook</span>
+          </a>
+        </div>
+      </div>
+    </main>
+    <load src="../../../partials/footer.html" />
+  </body>
+</html>
+
+<style>
+  .success-message {
+    text-align: center;
+    padding-top: 3rem;
+  }
+
+  .success-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .success-card {
+    max-width: 500px;
+    margin: 2rem auto;
+    text-align: left;
+  }
+
+  .success-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .success-card li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .success-card li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--c-cyan);
+    font-weight: bold;
+  }
+
+  .success-card .social-links {
+    justify-content: flex-start;
+    margin-top: 1rem;
+  }
+</style>

@@ -1,9 +1,246 @@
-<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="description" content="Connecting missionaries with the supplies they need, one trusted traveler at a time."><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="icon" type="image/svg+xml" href="/images/logo.svg"><meta name="generator" content="Astro v5.18.1"><title>Travel Hub | PouchDay</title><!-- Google Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>.travel-hub-section[data-astro-cid-iudopeso]{text-align:center;padding:3rem 0}.travel-hub-icon[data-astro-cid-iudopeso]{font-size:4rem;margin-bottom:1.5rem}.travel-hub-section[data-astro-cid-iudopeso] h2[data-astro-cid-iudopeso]{margin-bottom:1rem}.travel-hub-section[data-astro-cid-iudopeso] p[data-astro-cid-iudopeso]{max-width:600px;margin:0 auto 2rem}.travel-hub-btn[data-astro-cid-iudopeso]{max-width:250px;margin:0 auto;text-align:center}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+<meta
+  name="description"
+  content="Connecting missionaries with the supplies they need, one trusted traveler at a time."
+/>
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+/>
+<link rel="icon" type="image/svg+xml" href="/assets/logo-mxTr47OJ.svg" />
+<meta name="generator" content="{Astro.generator}" />
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+  rel="stylesheet"
+/>
+
+
+    <title>Travel Hub | PouchDay</title>
+    <script type="module" crossorigin src="/assets/header-Dm00x53R.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/header-D6e-PYgV.css">
+  </head>
+  <body>
+    <header x-data="headerNav()" x-init="init()" @click.outside="closeAll()">
+  <a href="/" class="logo">
+    <img src="/assets/logo-mxTr47OJ.svg" alt="PouchDay Logo" />
+  </a>
+
+  <button
+    class="nav-toggle"
+    type="button"
+    aria-label="Toggle navigation"
+    @click="toggleNav()"
+    :aria-expanded="navOpen"
+  >
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav>
+    <a href="/">Home</a>
+    <a href="/ship/">Ship</a>
+    <div class="nav-group">
+      <button
+        class="nav-group-btn"
+        type="button"
+        aria-expanded="false"
+        aria-controls="travel-menu"
+        @click.stop="toggleTravelMenu()"
+        :aria-expanded="travelMenuOpen"
+      >
+        Travel
+        <svg
+          class="nav-chevron"
+          viewBox="0 0 10 6"
+          width="10"
+          height="6"
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M1 1l4 4 4-4"></path>
+        </svg>
+      </button>
+      <div
+        id="travel-menu"
+        class="nav-group-menu"
+        :class="{ 'is-open': travelMenuOpen }"
+      >
+        <a href="/travel/seeking/" @click="closeAll()">Seeking Travelers</a>
+        <a href="/travel/offer/" @click="closeAll()">Offer to Travel</a>
+      </div>
+    </div>
+    <a href="/donate/" @click="closeAll()">Donate</a>
+    <a href="/contact/" @click="closeAll()">Contact</a>
+  </nav>
+</header>
+
+    <main>
+      <h1>Travel Hub</h1>
+      <p>
+        PouchDay connects missionaries with trusted volunteers who carry
+        supplies across borders. There are two ways to get involved.
+      </p>
+
+      <hr />
+
+      <section class="travel-hub-section">
+        <div class="travel-hub-icon">✈️</div>
+        <h2>Seeking Travelers</h2>
+        <p>
+          We maintain a list of upcoming trips where we need volunteers to
+          carry a package. Browse the schedule and sign up if you're available
+          to help on one of those dates.
+        </p>
+        <a href="/travel/seeking/" class="btn-primary travel-hub-btn"
+          >See Available Trips</a
+        >
+      </section>
+
+      <hr />
+
+      <section class="travel-hub-section">
+        <div class="travel-hub-icon">📦</div>
+        <h2>Offer to Travel</h2>
+        <p>
+          Already planning a trip? Let us know where you're flying and when,
+          and we'll see if there are any packages that need to reach a mission
+          in that area.
+        </p>
+        <a href="/travel/request/" class="btn-primary travel-hub-btn"
+          >Offer to Carry</a
+        >
+      </section>
+    </main>
+      <p>
+        PouchDay connects missionaries with trusted volunteers who carry
+        supplies across borders. There are two ways to get involved.
+
+<style>
+  .travel-hub-section {
+    text-align: center;
+    padding: 3rem 0;
+  }
+
+  .travel-hub-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .travel-hub-section h2 {
+    margin-bottom: 1rem;
+  }
+
+  .travel-hub-section p {
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+  }
+
+  .travel-hub-btn {
+    max-width: 250px;
+    margin: 0 auto;
+    text-align: center;
+  }
 </style>
-<link rel="stylesheet" href="/assets/index.D2_628e9.css"><script type="module" src="/assets/page.B1D-nYk3.js"></script></head> <body class> <header data-astro-cid-3ef6ksr2> <a href="/" class="logo" data-astro-cid-3ef6ksr2> <img src="/images/logo.svg" alt="PouchDay Logo" data-astro-cid-3ef6ksr2> </a> <button class="nav-toggle" aria-label="Toggle navigation" data-astro-cid-3ef6ksr2> <span data-astro-cid-3ef6ksr2></span><span data-astro-cid-3ef6ksr2></span><span data-astro-cid-3ef6ksr2></span> </button> <nav data-astro-cid-3ef6ksr2> <a href="/" data-astro-cid-3ef6ksr2>Home</a> <a href="/shop/" data-astro-cid-3ef6ksr2>Shop</a> <div class="nav-group" data-astro-cid-3ef6ksr2> <button class="nav-group-btn" aria-expanded="false" aria-controls="travel-menu" data-astro-cid-3ef6ksr2>
-Travel
-<svg class="nav-chevron" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-3ef6ksr2><path d="M1 1l4 4 4-4" data-astro-cid-3ef6ksr2></path></svg> </button> <div id="travel-menu" class="nav-group-menu" data-astro-cid-3ef6ksr2> <a href="/travel/seeking/" data-astro-cid-3ef6ksr2>Seeking Travelers</a> <a href="/travel/request/" data-astro-cid-3ef6ksr2>Request a Courier</a> </div> </div> <a href="/donate/" data-astro-cid-3ef6ksr2>Donate</a> <a href="/contact/" data-astro-cid-3ef6ksr2>Contact</a> </nav> </header>  <script type="module">document.addEventListener("DOMContentLoaded",()=>{const a=document.querySelector(".nav-toggle"),c=document.body;a&&(a.addEventListener("click",()=>{c.classList.toggle("nav-open")}),document.querySelectorAll("nav a").forEach(e=>{e.addEventListener("click",()=>{c.classList.remove("nav-open"),o()})}));function o(){document.querySelectorAll(".nav-group-btn").forEach(e=>{e.setAttribute("aria-expanded","false");const t=e.getAttribute("aria-controls"),n=t?document.getElementById(t):null;n&&n.classList.remove("is-open")})}document.querySelectorAll(".nav-group-btn").forEach(e=>{e.addEventListener("click",t=>{const n=e.getAttribute("aria-expanded")==="true",d=e.getAttribute("aria-controls"),r=d?document.getElementById(d):null;o(),n||(e.setAttribute("aria-expanded","true"),r&&r.classList.add("is-open")),t.stopPropagation()})}),document.addEventListener("click",()=>{o()})});</script> <main>  <h1 data-astro-cid-iudopeso>Travel Hub</h1> <p data-astro-cid-iudopeso>PouchDay connects missionaries with trusted volunteers who carry supplies across borders. There are two ways to get involved.</p> <hr data-astro-cid-iudopeso> <section class="travel-hub-section" data-astro-cid-iudopeso> <div class="travel-hub-icon" data-astro-cid-iudopeso>✈️</div> <h2 data-astro-cid-iudopeso>Seeking Travelers</h2> <p data-astro-cid-iudopeso>We maintain a list of upcoming trips where we need volunteers to carry a package. Browse the schedule and sign up if you're available to help on one of those dates.</p> <a href="/travel/seeking/" class="btn-primary travel-hub-btn" data-astro-cid-iudopeso>See Available Trips</a> </section> <hr data-astro-cid-iudopeso> <section class="travel-hub-section" data-astro-cid-iudopeso> <div class="travel-hub-icon" data-astro-cid-iudopeso>📦</div> <h2 data-astro-cid-iudopeso>Request a Courier</h2> <p data-astro-cid-iudopeso>Already planning a trip? Let us know where you're flying and when, and we'll see if there are any packages that need to reach a mission in that area.</p> <a href="/travel/request/" class="btn-primary travel-hub-btn" data-astro-cid-iudopeso>Offer to Carry</a> </section>  </main> <footer> <div>&copy; 2024 PouchDay. Made with ❤️ for missionaries worldwide.</div> <div class="social-links" id="socials-footer"> <a href="https://instagram.com/pouchday" class="social-link" target="_blank" rel="noopener"> <svg viewBox="0 0 24 24" fill="currentColor"> <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5a4.25 4.25 0 0 0 4.25 4.25h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5a4.25 4.25 0 0 0-4.25-4.25h-8.5zm8 2.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zM12 7.25a4.75 4.75 0 1 1 0 9.5 4.75 4.75 0 0 1 0-9.5zm0 1.5a3.25 3.25 0 1 0 0 6.5 3.25 3.25 0 0 0 0-6.5z"></path> </svg>
-Instagram
-</a> <a href="https://facebook.com/pouchday" class="social-link" target="_blank" rel="noopener"> <svg viewBox="0 0 24 24" fill="currentColor"> <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88v-6.99H7.9V12h2.54V9.8c0-2.51 1.49-3.9 3.78-3.9 1.09 0 2.24.19 2.24.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99C18.34 21.13 22 16.99 22 12z"></path> </svg>
-Facebook
-</a> </div> </footer> </body></html> 
+      </p>
+
+      <hr />
+
+      <section class="travel-hub-section">
+        <div class="travel-hub-icon">✈️</div>
+        <h2>Seeking Travelers</h2>
+        <p>
+          We maintain a list of upcoming trips where we need volunteers to
+          carry a package. Browse the schedule and sign up if you're available
+          to help on one of those dates.
+        </p>
+        <a href="/travel/seeking/" class="btn-primary travel-hub-btn"
+          >See Available Trips</a
+        >
+      </section>
+
+      <hr />
+
+      <section class="travel-hub-section">
+        <div class="travel-hub-icon">📦</div>
+        <h2>Offer to Travel</h2>
+        <p>
+          Already planning a trip? Let us know where you're flying and when,
+          and we'll see if there are any packages that need to reach a mission
+          in that area.
+        </p>
+        <a href="/travel/request/" class="btn-primary travel-hub-btn"
+          >Offer to Carry</a
+        >
+      </section>
+    </main>
+    <footer>
+  <div>&copy; 2024 PouchDay. Made with ❤️ for missionaries worldwide.</div>
+  <div class="social-links" id="socials-footer">
+    <a
+      href="https://instagram.com/pouchday"
+      class="social-link"
+      target="_blank"
+      rel="noopener"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5a4.25 4.25 0 0 0 4.25 4.25h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5a4.25 4.25 0 0 0-4.25-4.25h-8.5zm8 2.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zM12 7.25a4.75 4.75 0 1 1 0 9.5 4.75 4.75 0 0 1 0-9.5zm0 1.5a3.25 3.25 0 1 0 0 6.5 3.25 3.25 0 0 0 0-6.5z"
+        />
+      </svg>
+      Instagram
+    </a>
+    <a
+      href="https://facebook.com/pouchday"
+      class="social-link"
+      target="_blank"
+      rel="noopener"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88v-6.99H7.9V12h2.54V9.8c0-2.51 1.49-3.9 3.78-3.9 1.09 0 2.24.19 2.24.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99C18.34 21.13 22 16.99 22 12z"
+        />
+      </svg>
+      Facebook
+    </a>
+  </div>
+</footer>
+
+  </body>
+</html>
+
+<style>
+  .travel-hub-section {
+    text-align: center;
+    padding: 3rem 0;
+  }
+
+  .travel-hub-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .travel-hub-section h2 {
+    margin-bottom: 1rem;
+  }
+
+  .travel-hub-section p {
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+  }
+
+  .travel-hub-btn {
+    max-width: 250px;
+    margin: 0 auto;
+    text-align: center;
+  }
+</style>

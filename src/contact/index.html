@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <load src="../partials/head.html" />
+    <title>Contact | PouchDay</title>
+  </head>
+  <body>
+    <load src="../partials/header.html" />
+    <main>
+      <div class="contact-intro">
+        <h1>Contact Us</h1>
+        <p>Have a question? Send us a message and we'll reply by email.</p>
+      </div>
+
+      <div class="success-message" id="contact-success" hidden>
+        <div class="success-icon">✓</div>
+        <h2>Message sent!</h2>
+        <p>Thanks for reaching out. We'll get back to you within 24 hours.</p>
+      </div>
+
+      <form
+        action="https://formsubmit.co/pouchday-dev@proton.me"
+        method="POST"
+        id="contact-form"
+      >
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_subject" value="New Contact Message" />
+        <input
+          type="hidden"
+          name="_next"
+          id="contact-next"
+          value="/contact/?sent=1"
+        />
+
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" name="name" required />
+        </div>
+
+        <div class="form-group">
+          <label>Your Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="you@example.com"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" name="subject" required />
+        </div>
+
+        <div class="form-group">
+          <label>Message</label>
+          <textarea name="message" rows="6" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary">Send Message</button>
+      </form>
+    </main>
+    <load src="../partials/footer.html" />
+  </body>
+</html>
+
+<style>
+  .contact-intro {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .contact-intro h1 {
+    color: var(--c-navy);
+    margin-bottom: 1rem;
+  }
+
+  .contact-intro p {
+    font-size: 1.1rem;
+    color: var(--c-muted);
+  }
+
+  .success-message {
+    text-align: center;
+    background: linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .success-message .success-icon {
+    font-size: 3rem;
+    color: #5cb85c;
+    margin-bottom: 1rem;
+  }
+
+  .success-message h2 {
+    color: var(--c-navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .success-message p {
+    color: var(--c-muted);
+    margin: 0;
+  }
+</style>
+
+<script type="module">
+  const contactNext = document.getElementById("contact-next");
+  const contactSuccess = document.getElementById("contact-success");
+
+  if (contactNext) {
+    contactNext.value = `${window.location.origin}/contact/?sent=1`;
+  }
+
+  if (
+    new URLSearchParams(window.location.search).get("sent") === "1" &&
+    contactSuccess
+  ) {
+    contactSuccess.hidden = false;
+  }
+</script>

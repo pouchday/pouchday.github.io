@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <load src="../../partials/head.html" />
+    <title>Request Travel | PouchDay</title>
+  </head>
+  <body>
+    <load src="../../partials/header.html" />
+    <main>
+      <h1>Offer to Travel</h1>
+      <p>
+        Flying somewhere soon? Let us know your destination and travel date and
+        we'll see if there are any packages that need to reach a mission in your
+        area.
+      </p>
+
+      <form
+        id="request-form"
+        action="https://formsubmit.co/pouchday-dev@proton.me"
+        method="POST"
+      >
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_subject" value="New Travel Offer" />
+        <input
+          type="hidden"
+          name="_next"
+          id="request-next"
+          value="/travel/request/success/"
+        />
+
+        <div class="form-group">
+          <label for="field-mission">Mission Destination</label>
+          <select name="mission" id="field-mission" required>
+            <option value="" disabled selected>Loading missions…</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="field-travel-date">Travel Date</label>
+          <input
+            type="date"
+            name="travel_date"
+            id="field-travel-date"
+            class="travel-date-input"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="field-capacity">Luggage Capacity</label>
+          <select name="capacity" id="field-capacity">
+            <option value="Small Item">I can take a small item</option>
+            <option value="Extra Suitcase">I can check an extra bag</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="field-email">Your Email</label>
+          <input
+            type="email"
+            name="email"
+            id="field-email"
+            placeholder="you@example.com"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn-primary">Submit Request</button>
+      </form>
+    </main>
+    <load src="../../partials/footer.html" />
+  </body>
+</html>
+
+<style>
+  .travel-date-input {
+    max-width: 200px;
+  }
+
+  @media (max-width: 768px) {
+    .travel-date-input {
+      max-width: 100%;
+    }
+  }
+</style>
+
+<script type="module">
+  const requestNext = document.getElementById("request-next");
+
+  if (requestNext) {
+    requestNext.value = `${window.location.origin}/travel/request/success/`;
+  }
+
+  const MISSIONS_TSV_URL =
+    "https://docs.google.com/spreadsheets/d/1pNKEJRMOZY2yTuOt91vOZ9qeRW5S9oVaF9NnkLsoEOc/export?gid=0&format=tsv";
+  const missionSelect = document.getElementById("field-mission");
+
+  fetch(MISSIONS_TSV_URL)
+    .then((response) => response.text())
+    .then((text) => {
+      const lines = text.trim().split("\n");
+
+      if (lines.length < 2) {
+        missionSelect.innerHTML =
+          '<option value="" disabled selected>No missions available</option>';
+        return;
+      }
+
+      const headers = lines[0].split("\t").map((header) => header.trim());
+      const rows = lines
+        .slice(1)
+        .map((line) => line.split("\t").map((cell) => cell.trim()));
+
+      function findIdx(keywords, skip) {
+        return headers.findIndex(
+          (header, index) =>
+            index !== skip &&
+            keywords.some((keyword) => header.toLowerCase().includes(keyword)),
+        );
+      }
+
+      const nameIdx = findIdx(["mission", "name"], -1);
+      const activeIdx = headers.findIndex((header, index) => {
+        if (index === nameIdx) return false;
+        return ["active", "available", "accepting"].some((keyword) =>
+          header.toLowerCase().includes(keyword),
+        );
+      });
+
+      missionSelect.innerHTML =
+        '<option value="" disabled selected>Select a mission…</option>';
+
+      rows.forEach((cols) => {
+        const missionName = cols[nameIdx >= 0 ? nameIdx : 0];
+        if (!missionName) return;
+
+        const rawActive = activeIdx >= 0 ? cols[activeIdx] : "";
+        const isAvailable =
+          rawActive === "" || rawActive.toLowerCase() !== "false";
+
+        const option = document.createElement("option");
+        option.value = missionName;
+        option.textContent = isAvailable
+          ? missionName
+          : `${missionName} (Unavailable)`;
+        option.disabled = !isAvailable;
+        missionSelect.appendChild(option);
+      });
+    })
+    .catch(() => {
+      missionSelect.innerHTML =
+        '<option value="" disabled selected>Unable to load missions</option>';
+    });
+</script>
