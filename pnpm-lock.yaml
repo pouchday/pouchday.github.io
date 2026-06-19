@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@rolldown/binding-linux-x64-gnu':
+        specifier: ^1.1.2
+        version: 1.1.2
       alpinejs:
         specifier: ^3.15.12
         version: 3.15.12
@@ -495,6 +498,12 @@ packages:
     cpu: [x64]
     os: [linux]
     libc: [glibc]
+
+  '@rolldown/binding-linux-x64-gnu@1.1.2':
+    resolution: {integrity: sha512-JY4w85pU3iAiJVMh5nuk4/Mh9GjMsupe8MrIN53rwxAZW64GKrWeJBuN6SxQg9QTU5uB1cxyhDzW8jqRn1EABw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [linux]
 
   '@rolldown/binding-linux-x64-musl@1.0.3':
     resolution: {integrity: sha512-pSdpdUJHkuCxun9LE7jvgUB9qsRgaiyNNCX7m/AvHTcq67AiT/Yhoxvw5zPfhrM8k/BfP8ce/hMOpthKDpEUow==}
@@ -1264,6 +1273,8 @@ snapshots:
 
   '@rolldown/binding-linux-x64-gnu@1.0.3':
     optional: true
+
+  '@rolldown/binding-linux-x64-gnu@1.1.2': {}
 
   '@rolldown/binding-linux-x64-musl@1.0.3':
     optional: true
