@@ -12,6 +12,17 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="./ship.css" />
+    <script type="module">
+      import Alpine from "alpinejs";
+      import { shipWizard } from "./ship.js";
+      import { headerNav } from "../partials/header.js";
+
+      Alpine.plugin(shipWizard);
+      Alpine.plugin(headerNav);
+
+      window.Alpine = Alpine;
+      Alpine.start();
+    </script>
   </head>
   <body>
     <load src="../partials/header.html" />

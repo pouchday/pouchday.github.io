@@ -3,6 +3,15 @@
   <head>
     <load src="../../../partials/head.html" />
     <title>Request received! | PouchDay</title>
+    <script type="module">
+      import Alpine from "alpinejs";
+      import { headerNav } from "../../../partials/header.js";
+
+      Alpine.plugin(headerNav);
+
+      window.Alpine = Alpine;
+      Alpine.start();
+    </script>
   </head>
   <body>
     <load src="../../../partials/header.html" />

@@ -5,6 +5,17 @@
     <load src="./partials/head.html" />
     <title>PouchDay</title>
     <link rel="stylesheet" href="./index.css" />
+    <script type="module">
+      import Alpine from "alpinejs";
+      import { locationSearch } from "./index.js";
+      import { headerNav } from "./partials/header.js";
+
+      Alpine.plugin(locationSearch);
+      Alpine.plugin(headerNav);
+
+      window.Alpine = Alpine;
+      Alpine.start();
+    </script>
   </head>
   <body>
     <load src="./partials/header.html" />
@@ -30,7 +41,7 @@
         <div class="right">
           <h2 id="about-us-title">About Us</h2>
           <p>
-            We want to make shipping to your missionary and easy and affordable
+            We want to make shipping to your missionary an easy and affordable
             process! At PouchDay, we do this by connecting with
             <em>trusted travelers</em> who will bring your package with them on
             their journeys.
@@ -54,7 +65,7 @@
           <table id="location-search-results">
             <thead>
               <tr>
-                <th>Accepting Packages</th>
+                <th>Status</th>
                 <th>Mission</th>
                 <th>Departure Date</th>
               </tr>
@@ -62,14 +73,12 @@
             <tbody>
               <template
                 x-for="mission in filteredMissions"
-                :key="mission['Mission Name']"
+                :key="mission.mission"
               >
                 <tr className="filtered-mission">
-                  <td
-                    x-text='mission["Currently Accepting Packages"] == "TRUE" ? "Yes" : "No"'
-                  ></td>
-                  <td x-text="mission['Mission Name']"></td>
-                  <td>Not yet scheduled</td>
+                  <td x-text="mission.status"></td>
+                  <td x-text="mission.mission"></td>
+                  <td x-text="formatDate(mission.date)"></td>
                 </tr>
               </template>
             </tbody>

@@ -1,26 +1,28 @@
-const MISSIONS_TSV = 'https://docs.google.com/spreadsheets/d/1pNKEJRMOZY2yTuOt91vOZ9qeRW5S9oVaF9NnkLsoEOc/export?gid=0&format=tsv';
-
-/* 0: Object { "Mission Name": "Adriatic North", "Currently Accepting Packages": "TRUE", "Mission Office Address": "" } */
-
-// export interface MissionRow {
-//     "Mission Name": string,
-//     "Currently Accepting Packages": string,
-//     "Mission Office Address": string
-// }
+const MISSIONS_TSV = 'https://docs.google.com/spreadsheets/d/1vmm4U60ifl4Yh1ypGuRzkEUIZzB_WeTXb2VgCtBL4zY/export?gid=0&format=tsv'
+const TRIPS_TSV = 'https://docs.google.com/spreadsheets/d/1vmm4U60ifl4Yh1ypGuRzkEUIZzB_WeTXb2VgCtBL4zY/export?gid=1211587268&format=tsv'
 
 /**
  * @typedef {{
- * "Mission Name": string,
- * "Currently Accepting Packages": string,
- * "Mission Office Address": string
- * }} MissionRow 
+ * mission: string,
+ * date: Date,
+ * status: "Not Yet Open" | "Open" | "Sold Out" | "Shipped"
+ * }} Trip
  */
 
+/**
+ * @typedef {{
+ * mission: string,
+ * price: number,
+ * officeAddress: string,
+ * officePhone: string,
+ * country: string
+ * }} Mission 
+ */
 
 /**
  * Parses a TSV file into a row of objects
  * @param {string} text 
- * @returns {MissionRow[]}
+ * @returns {Object[]}
  */
 function parseTSVRows(text) {
     const lines = text.trim().split('\n');
@@ -33,8 +35,40 @@ function parseTSVRows(text) {
     return rows;
 }
 
-export async function fetchMissions() {
+/**
+ * Pulls missions from the google sheet.
+ * @returns {Promise<Mission[]>}
+ */
+async function fetchMissions() {
     const res = await fetch(MISSIONS_TSV)
     const tsv = await res.text()
-    return parseTSVRows(tsv);
+    return parseTSVRows(tsv).map(missionRow => ({
+        mission: missionRow["Mission Name"],
+        price: Number(missionRow["Price"]),
+        officeAddress: missionRow["Mission Office Address"],
+        officePhone: missionRow["Mission Office Phone"],
+        country: missionRow["Country"],
+    }));
+}
+
+/**
+ * Pulls missions from the google sheet.
+ * @returns {Promise<Trip[]>}
+ */
+async function fetchTrips() {
+    const res = await fetch(TRIPS_TSV)
+    const tsv = await res.text()
+    return parseTSVRows(tsv).map(trip => ({
+        mission: trip["Mission Name"],
+        date: new Date(trip["Due Date"]),
+        status: trip["Status"]
+    }))
+}
+
+export async function fetchDatabase() {
+    const [missions, trips] = await Promise.all([fetchMissions(), fetchTrips()])
+    return {
+        missions,
+        trips
+    }
 }

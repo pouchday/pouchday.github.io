@@ -1,37 +1,50 @@
-import Alpine from 'alpinejs'
+import { getActiveSession } from "../utils/sessions"
 
-Alpine.data('headerNav', () => ({
-    navOpen: false,
-    travelMenuOpen: false,
+export function headerNav(Alpine) {
+    Alpine.store("session", {
+        session: null,
 
-    init() {
-        this.syncBodyClass()
-    },
+        logOut() {
+            localStorage.removeItem('pouchday_session');
+            this.session = null
+        },
 
-    syncBodyClass() {
-        document.body.classList.toggle('nav-open', this.navOpen)
-    },
-
-    toggleNav() {
-        this.navOpen = !this.navOpen
-
-        if (!this.navOpen) {
-            this.travelMenuOpen = false
+        init() {
+            this.session = getActiveSession()
         }
+    })
 
-        this.syncBodyClass()
-    },
+    Alpine.data('headerNav', () => ({
+        navOpen: false,
+        travelMenuOpen: false,
 
-    toggleTravelMenu() {
-        this.travelMenuOpen = !this.travelMenuOpen
-    },
+        init() {
+            this.syncBodyClass()
 
-    closeAll() {
-        this.navOpen = false
-        this.travelMenuOpen = false
-        this.syncBodyClass()
-    },
-}))
+        },
 
-window.Alpine = Alpine
-Alpine.start()
+        syncBodyClass() {
+            document.body.classList.toggle('nav-open', this.navOpen)
+        },
+
+        toggleNav() {
+            this.navOpen = !this.navOpen
+
+            if (!this.navOpen) {
+                this.travelMenuOpen = false
+            }
+
+            this.syncBodyClass()
+        },
+
+        toggleTravelMenu() {
+            this.travelMenuOpen = !this.travelMenuOpen
+        },
+
+        closeAll() {
+            this.navOpen = false
+            this.travelMenuOpen = false
+            this.syncBodyClass()
+        },
+    }))
+}

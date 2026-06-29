@@ -217,11 +217,13 @@ section.how-it-works h2 {
 
 table#location-search-results {
   margin-top: 1rem;
-  width: 100%;
+  width: 100vw;
+  margin-left: calc((-100vw + 100%) / 2);
+  margin-right: calc((-100vw + 100%) / 2);
   background-color: var(--c-text);
   color: var(--c-bg);
-  /* text-transform: uppercase; */
-  padding: 0.5rem;
+  text-transform: uppercase;
+  padding: 0.5rem 1.5rem;
   font-family: monospace;
   font-size: 0.8rem;
 }

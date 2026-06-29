@@ -12,6 +12,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 index: resolve(__dirname, 'src', 'index.html'),
+                auth: resolve(__dirname, 'src', 'auth', 'index.html'),
                 ship: resolve(__dirname, 'src', 'ship', 'index.html'),
                 restrictions: resolve(__dirname, 'src', 'restrictions', 'index.html'),
                 travel: resolve(__dirname, 'src', 'travel', 'index.html'),

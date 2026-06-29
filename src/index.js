@@ -1,24 +1,47 @@
-import Alpine from 'alpinejs'
-import { fetchMissions } from './utils/missions'
+import { fetchDatabase } from './utils/missions'
 
-Alpine.data("locationSearch", () => ({
-    /** @type {Awaited<ReturnType<typeof fetchMissions>>} */
-    missions: [],
-    search: "",
+export function locationSearch(Alpine) {
+    Alpine.data("locationSearch", () => ({
+        /** @type {Awaited<ReturnType<typeof fetchDatabase>>} */
+        database: { missions: [], trips: [] },
+        search: "",
 
-    get filteredMissions() {
-        const term = this.search.trim().toLowerCase()
+        formatDate(date) {
+            return date.toLocaleDateString()
+        },
 
-        if (term === "") {
-            return this.missions.slice(0, 10)
-        }
+        /** @type {import("./utils/missions").Trip[]} */
+        get closestTrips() {
+            if (!this.database || !this.database.trips) return [];
 
-        return this.missions
-            .filter((m) => m["Mission Name"].toLowerCase().includes(term))
-            .slice(0, 10)
-    },
+            // Group the earliest trip by mission name
+            const closestMap = this.database.trips.reduce((acc, trip) => {
+                const currentClosest = acc.get(trip.mission);
 
-    async init() {
-        this.missions = await fetchMissions()
-    },
-}))
+                if (!currentClosest || trip.date < currentClosest.date) {
+                    acc.set(trip.mission, trip);
+                }
+
+                return acc;
+            }, new Map());
+
+            return Array.from(closestMap.values());
+        },
+
+        get filteredMissions() {
+            const term = this.search.trim().toLowerCase()
+
+            if (term === "") {
+                return this.closestTrips.slice(0, 20)
+            }
+
+            return this.closestTrips
+                .filter((m) => m.mission.toLowerCase().includes(term))
+                .slice(0, 20)
+        },
+
+        async init() {
+            this.database = await fetchDatabase()
+        },
+    }))
+}
