@@ -3,7 +3,7 @@
   <head>
     <load src="../../partials/head.html" />
     <title>Request Travel | PouchDay</title>
-    <script type="module">
+    <script type="module" defer>
       import Alpine from "alpinejs";
       import { headerNav } from "../../partials/header.js";
 
@@ -93,7 +93,7 @@
   }
 </style>
 
-<script type="module">
+<script type="module" defer>
   const requestNext = document.getElementById("request-next");
 
   if (requestNext) {

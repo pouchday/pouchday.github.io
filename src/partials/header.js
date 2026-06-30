@@ -1,18 +1,11 @@
 import { getActiveSession } from "../utils/sessions"
 
 export function headerNav(Alpine) {
-    Alpine.store("session", {
-        session: null,
-
-        logOut() {
-            localStorage.removeItem('pouchday_session');
-            this.session = null
-        },
-
-        init() {
-            this.session = getActiveSession()
-        }
-    })
+    Alpine.store("auth", {
+        user: window.__INITIAL_AUTH__?.user || null,
+        isAuthenticated: window.__INITIAL_AUTH__?.authenticated || false,
+        isLoading: false // Always ready immediately
+    });
 
     Alpine.data('headerNav', () => ({
         navOpen: false,

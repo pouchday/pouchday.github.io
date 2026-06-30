@@ -11,7 +11,6 @@
       referrerpolicy="no-referrer"
     />
     <style>
-      /* Component-specific overrides for centering the single card layout */
       .auth-container {
         max-width: 460px;
         margin: 2rem auto;
@@ -69,9 +68,16 @@
         cursor: pointer;
       }
     </style>
-    <script type="module">
+    <script type="module" defer>
       import Alpine from "alpinejs";
       import { headerNav } from "../partials/header.js";
+
+      // Register the global store populated by your edge middleware
+      Alpine.store("auth", {
+        user: window.__INITIAL_AUTH__?.user || null,
+        isAuthenticated: window.__INITIAL_AUTH__?.authenticated || false,
+        isLoading: false,
+      });
 
       Alpine.data("authHandler", () => ({
         isLogin: true,
@@ -84,7 +90,8 @@
           const action = this.isLogin ? "login" : "signup";
 
           try {
-            const res = await fetch("/functions/api/auth", {
+            // Updated route matching your Pages function path architecture
+            const res = await fetch("/api/auth", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -98,18 +105,9 @@
             if (!res.ok) throw new Error(data.error || "Authentication failed");
 
             if (action === "login") {
-              // Commit safe session user details to storage
-              localStorage.setItem(
-                "pouchday_session",
-                JSON.stringify({
-                  user: data.user,
-                  access_token: data.session?.access_token,
-                  expires_at: data.session
-                    ? Date.now() + data.session.expires_in * 1000
-                    : null,
-                }),
-              );
-              window.location.href = "/ship/";
+              // Read redirect query parameter or default back to dashboard path
+              const params = new URLSearchParams(window.location.search);
+              window.location.href = params.get("returnTo") || "/ship/";
             } else {
               alert(
                 "Registration complete! Please check your email for a verification link.",
@@ -124,7 +122,7 @@
 
         async triggerOAuth(provider) {
           try {
-            const res = await fetch("/functions/api/auth", {
+            const res = await fetch("/api/auth", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ action: "oauth", provider }),
@@ -140,7 +138,6 @@
       }));
 
       Alpine.plugin(headerNav);
-
       window.Alpine = Alpine;
       Alpine.start();
     </script>
