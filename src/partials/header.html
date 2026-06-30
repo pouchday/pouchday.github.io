@@ -52,11 +52,11 @@
     </div>
     <a href="/donate/" @click="closeAll()">Donate</a>
     <a href="/contact/" @click="closeAll()">Contact</a>
-    <template x-if="!$store.auth.loggedIn">
+    <template x-if="!$store.auth.isAuthenticated">
       <a href="/auth/" @click="closeAll()">Log In</a>
     </template>
-    <template x-if="$store.auth.loggedIn">
-      <a href="/auth/" @click="closeAll()">Log Out</a>
+    <template x-if="$store.auth.isAuthenticated">
+      <a href="#" @click.prevent="closeAll(); logout()">Log Out</a>
     </template>
   </nav>
 </header>

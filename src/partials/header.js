@@ -39,5 +39,19 @@ export function headerNav(Alpine) {
             this.travelMenuOpen = false
             this.syncBodyClass()
         },
+
+        async logout() {
+            try {
+                const res = await fetch("/api/logout", { method: "POST" });
+                if (res.ok) {
+                    // Send them back to the landing page or login page
+                    window.location.href = "/auth";
+                } else {
+                    console.error("Logout failed server-side");
+                }
+            } catch (err) {
+                console.error("Network error during logout:", err);
+            }
+        }
     }))
 }

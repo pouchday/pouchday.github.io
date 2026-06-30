@@ -7,14 +7,14 @@ import {
 
 export const onRequest: PagesFunction<{
   SUPABASE_URL: string;
-  SUPABASE_ANON_KEY: string;
+  SUPABASE_SECRET_KEY: string;
 }> = async (context) => {
   const { request, env } = context;
   const url = new URL(request.url);
 
   // Initialize the SSR-compatible Supabase Client
   const responseHeaders = new Headers();
-  const supabase = createServerClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY, {
+  const supabase = createServerClient(env.SUPABASE_URL, env.SUPABASE_SECRET_KEY, {
     cookies: {
       getAll() {
         const parsed = parseCookieHeader(request.headers.get("Cookie") ?? "");
