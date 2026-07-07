@@ -1,0 +1,118 @@
+/* =====================================================
+   FAQ PAGE LAYOUT
+   ===================================================== */
+
+.restrictions-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-4) var(--space-5);
+}
+
+.restrictions-container h1 {
+  text-align: center;
+  margin-bottom: var(--space-4);
+}
+
+/* =====================================================
+   SEMANTIC ACCORDION DESIGN (<details> + <summary>)
+   ===================================================== */
+
+details {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-2);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition:
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+/* Open structural accenting state */
+details[open] {
+  border-color: var(--c-cyan);
+  box-shadow: var(--shadow-md);
+}
+
+summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+
+  padding: 1.1rem 1.4rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--c-navy);
+  background: var(--c-surface);
+  cursor: pointer;
+  user-select: none;
+  list-style: none; /* Strip legacy marker indicators native layout flags */
+}
+
+/* Remove default webkit indicator layout markers */
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Custom interactive indicator layout chevron icon */
+summary::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-right: 2.5px solid var(--c-muted);
+  border-bottom: 2.5px solid var(--c-muted);
+  transform: rotate(45deg);
+  transition:
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.2s ease;
+  flex-shrink: 0;
+  margin-right: 0.25rem;
+}
+
+/* Hover behaviors */
+summary:hover {
+  color: var(--c-cyan);
+}
+
+summary:hover::after {
+  border-color: var(--c-cyan);
+}
+
+/* Transformed open states layout */
+details[open] summary {
+  border-bottom: 1px solid var(--c-border);
+  background: linear-gradient(180deg, var(--c-surface) 0%, #fcfdfe 100%);
+}
+
+details[open] summary::after {
+  transform: rotate(-135deg);
+  border-color: var(--c-cyan);
+}
+
+/* Content box structure container elements */
+details > div {
+  padding: 1.25rem 1.4rem;
+  background: #fbfdff;
+}
+
+details p {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.65;
+  color: var(--c-muted);
+}
+
+/* Ensure paragraph highlights stand out clearly if links are present inside answers */
+details a {
+  color: var(--c-cyan);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* Keyboard access focus optimizations */
+summary:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--c-cyan) 60%, white);
+  outline-offset: -2px;
+}

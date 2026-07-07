@@ -1,147 +1,144 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <script type="module" src="/index.js"></script>
-    <load src="./partials/head.html" />
-    <title>PouchDay</title>
-    <link rel="stylesheet" href="./index.css" />
-    <script type="module" defer>
-      import Alpine from "alpinejs";
-      import { locationSearch } from "./index.js";
-      import { headerNav } from "./partials/header.js";
 
-      Alpine.plugin(locationSearch);
-      Alpine.plugin(headerNav);
+<head>
+  <script type="module" src="/index.js"></script>
+  <load src="./partials/head.html" />
+  <title>PouchDay</title>
+  <link rel="stylesheet" href="./index.css" />
+  <script type="module" defer>
+    import Alpine from "alpinejs";
+    import { locationSearch } from "./index.js";
+    import { headerNav } from "./partials/header.js";
 
-      window.Alpine = Alpine;
-      Alpine.start();
-    </script>
-  </head>
-  <body>
-    <load src="./partials/header.html" />
-    <main>
-      <section class="hero">
-        <div class="hero-inner">
-          <div class="hero-logo-wrap">
-            <img src="./assets/images/logo.svg" alt="PouchDay Logo" />
-          </div>
-          <div class="hero-actions">
-            <a href="/ship/" class="btn btn-cta">Send a Package</a>
-          </div>
+    Alpine.plugin(locationSearch);
+    Alpine.plugin(headerNav);
+
+    window.Alpine = Alpine;
+    Alpine.start();
+  </script>
+</head>
+
+<body>
+  <load src="./partials/header.html" />
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-logo-wrap">
+          <img src="./assets/images/logo.svg" alt="PouchDay Logo" />
         </div>
-      </section>
-
-      <section class="about-us" aria-labelledby="about-us-title">
-        <div class="left">
-          <img
-            src="./assets/images/missionary.png"
-            alt="Missionary with a PouchDay delivery"
-          />
+        <div class="hero-actions">
+          <a href="/ship/" class="btn btn-cta">Send a Package</a>
         </div>
-        <div class="right">
-          <h2 id="about-us-title">About Us</h2>
-          <p>
-            We want to make shipping to your missionary an easy and affordable
-            process! At PouchDay, we do this by connecting with
-            <em>trusted travelers</em> who will bring your package with them on
-            their journeys.
-          </p>
-          <p>
-            Most packages cost only 35$ to ship, and usually arrive within a
-            couple weeks!
-          </p>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="can-i-ship-to" aria-labelledby="can-i-ship-to-title">
-        <h2 id="can-i-ship-to-title">Can I Ship To _____?</h2>
+    <section class="about-us" aria-labelledby="about-us-title">
+      <div class="left">
+        <img src="./assets/images/missionary.png" alt="Missionary with a PouchDay delivery" />
+      </div>
+      <div class="right">
+        <h2 id="about-us-title">About Us</h2>
+        <p>
+          PouchDay was born from a simple truth: when someone answers the call to serve, their family shouldn't have to
+          watch from a distance.
+        <p>We are a family-founded service built to support the Gathering of Israel — one package at
+          a time. By connecting missionary families with trusted travelers heading their direction, we
+          make it possible to send real supplies, comfort items, and love to missionaries worldwide.</p>
+        </p>
+        <p>
+          Most shipments cost just $35. Because staying connected shouldn't cost a fortune.
+        </p>
+      </div>
+    </section>
 
-        <div x-data="locationSearch">
-          <input
-            type="text"
-            placeholder="Search for missions"
-            x-model="search"
-          />
-          <table id="location-search-results">
-            <thead>
-              <tr>
-                <th>Status</th>
-                <th>Mission</th>
-                <th>Departure Date</th>
+    <section class="can-i-ship-to" aria-labelledby="can-i-ship-to-title">
+      <h2 id="can-i-ship-to-title">Can I Ship To _____?</h2>
+
+      <div x-data="locationSearch">
+        <input type="text" placeholder="Search for missions" x-model="search" />
+        <table id="location-search-results">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Mission</th>
+              <th>International Price</th>
+              <th>Domestic Price</th>
+              <th>Departure Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="[mission, trip] in filteredMissions" :key="mission.mission">
+              <tr class="filtered-mission" :key="mission.mission + '_' + trip.status" @click="search = mission.mission">
+                <td x-text="trip.status"></td>
+                <td x-text="mission.mission" class="mission-name"></td>
+                <td x-text="'$' + mission.internationalPrice"></td>
+                <td x-text="'$' + mission.domesticPrice"></td>
+                <td x-text="formatDate(trip.date)"></td>
               </tr>
-            </thead>
-            <tbody>
-              <template
-                x-for="mission in filteredMissions"
-                :key="mission.mission"
-              >
-                <tr className="filtered-mission">
-                  <td x-text="mission.status"></td>
-                  <td x-text="mission.mission"></td>
-                  <td x-text="formatDate(mission.date)"></td>
-                </tr>
-              </template>
-            </tbody>
-          </table>
-        </div>
-      </section>
+            </template>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-      <section class="how-it-works" aria-labelledby="how-it-works-title">
-        <h2 id="how-it-works-title">How PouchDay Works</h2>
-        <ol class="steps-list">
-          <li class="step-item">
-            <span class="step-number" aria-hidden="true">1</span>
-            <div class="step-copy">
-              <h3>Create your request</h3>
-              <p>
-                Share what supplies you need, where they need to go, and when
-                they are needed.
-              </p>
-            </div>
-          </li>
-          <li class="step-item">
-            <span class="step-number" aria-hidden="true">2</span>
-            <div class="step-copy">
-              <h3>Get matched with a traveler</h3>
-              <p>
-                We connect your request with a trusted traveler headed your
-                direction.
-              </p>
-            </div>
-          </li>
-          <li class="step-item">
-            <span class="step-number" aria-hidden="true">3</span>
-            <div class="step-copy">
-              <h3>Deliver with confidence</h3>
-              <p>
-                Coordinate handoff details and get updates until your package
-                arrives.
-              </p>
-            </div>
-          </li>
-        </ol>
-      </section>
+    <section class="how-it-works" aria-labelledby="how-it-works-title">
+      <h2 id="how-it-works-title">How PouchDay Works</h2>
+      <ol class="steps-list">
+        <li class="step-item">
+          <span class="step-number" aria-hidden="true">1</span>
+          <div class="step-copy">
+            <h3>Create your request</h3>
+            <p>
+              Share what supplies you need, where they need to go, and when
+              they are needed.
+            </p>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-number" aria-hidden="true">2</span>
+          <div class="step-copy">
+            <h3>Get matched with a traveler</h3>
+            <p>
+              We connect your request with a trusted traveler headed your
+              direction.
+            </p>
+          </div>
+        </li>
+        <li class="step-item">
+          <span class="step-number" aria-hidden="true">3</span>
+          <div class="step-copy">
+            <h3>Deliver with confidence</h3>
+            <p>
+              Coordinate handoff details and get updates until your package
+              arrives.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </section>
 
-      <section class="card-grid">
-        <a href="/ship/" class="card">
-          <div class="card-icon card-icon--cyan">📦</div>
-          <h3>Send a Package</h3>
-          <p>Upload a manifest and get your box shipped.</p>
-        </a>
+    <section class="card-grid">
+      <a href="/ship/" class="card">
+        <div class="card-icon card-icon--cyan">📦</div>
+        <h3>Send a Package</h3>
+        <p>Upload a manifest and get your box shipped.</p>
+      </a>
 
-        <a href="/travel/" class="card">
-          <div class="card-icon card-icon--navy">✈️</div>
-          <h3>I'm Traveling</h3>
-          <p>Register your trip to help carry supplies.</p>
-        </a>
+      <a href="/travel/" class="card">
+        <div class="card-icon card-icon--navy">✈️</div>
+        <h3>I'm Traveling</h3>
+        <p>Register your trip to help carry supplies.</p>
+      </a>
 
-        <a href="/donate/" class="card">
-          <div class="card-icon card-icon--gold">💛</div>
-          <h3>Donate</h3>
-          <p>Help cover shipping costs for others.</p>
-        </a>
-      </section>
-    </main>
-    <load src="./partials/footer.html" />
-  </body>
+      <a href="/donate/" class="card">
+        <div class="card-icon card-icon--gold">💛</div>
+        <h3>Donate</h3>
+        <p>Help cover shipping costs for others.</p>
+      </a>
+    </section>
+  </main>
+  <load src="./partials/footer.html" />
+</body>
+
 </html>

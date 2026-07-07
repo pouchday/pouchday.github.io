@@ -15,7 +15,8 @@ const TRIPS_TSV = 'https://docs.google.com/spreadsheets/d/1vmm4U60ifl4Yh1ypGuRzk
  * price: number,
  * officeAddress: string,
  * officePhone: string,
- * country: string
+ * country: string,
+ * trips: Trip[]
  * }} Mission 
  */
 
@@ -44,10 +45,12 @@ async function fetchMissions() {
     const tsv = await res.text()
     return parseTSVRows(tsv).map(missionRow => ({
         mission: missionRow["Mission Name"],
-        price: Number(missionRow["Price"]),
+        internationalPrice: Number(missionRow["International Price"]),
+        domesticPrice: Number(missionRow["Domestic Price"]),
         officeAddress: missionRow["Mission Office Address"],
         officePhone: missionRow["Mission Office Phone"],
         country: missionRow["Country"],
+        trips: []
     }));
 }
 
@@ -67,8 +70,9 @@ async function fetchTrips() {
 
 export async function fetchDatabase() {
     const [missions, trips] = await Promise.all([fetchMissions(), fetchTrips()])
-    return {
-        missions,
-        trips
-    }
+    const missionMap = new Map(missions.map(m => [m.mission, m]))
+    trips.forEach(trip => {
+        missionMap.get(trip.mission)?.trips?.push(trip)
+    })
+    return missionMap
 }

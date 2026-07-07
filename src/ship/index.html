@@ -84,7 +84,7 @@
               class="btn-info"
               @click="window.open('/restrictions/', '_blank')"
             >
-              <i class="fa-solid to-list"></i> View Shipping Restrictions
+              <i class="fa-solid fa-list"></i> View Shipping Restrictions
             </button>
             <button
               type="button"
@@ -102,11 +102,11 @@
               name="missionary_name"
               x-model="missionaryName"
               placeholder="Elder or Sister Name"
-              :required="currentStep === 1"
+              :required="false /* currentStep === 1 */"
             />
           </div>
 
-          <div class="form-group">
+          <div class="form-group" x-data="{ localPreview: '' }">
             <label>
               Missionary Photo
               <span
@@ -119,16 +119,40 @@
               Help travelers connect with the people they're serving. Optional
               but encouraged!
             </p>
-            <input type="file" name="missionary_photo" accept="image/*" />
-          </div>
+            <input
+              type="file"
+              name="missionary_photo"
+              accept="image/*"
+              @change="const file = $event.target.files[0]; localPreview = file ? URL.createObjectURL(file) : ''"
+            />
 
+            <!-- Image Frame Preview Container -->
+            <template x-if="localPreview">
+              <div class="preview-gallery single-frame">
+                <div class="preview-thumb-wrapper">
+                  <img
+                    :src="localPreview"
+                    class="preview-img-thumb"
+                    alt="Missionary Preview"
+                  />
+                  <button
+                    type="button"
+                    class="btn-clear-preview"
+                    @click="localPreview = ''; $el.closest('.form-group').querySelector('input[type=file]').value = ''"
+                  >
+                    &times;
+                  </button>
+                </div>
+              </div>
+            </template>
+          </div>
           <div class="form-group">
             <label>Mission Destination</label>
             <select
               name="mission"
               x-model="selectedMission"
               @change="handleMissionChange"
-              :required="currentStep === 1"
+              :required="false /* currentStep === 1 */"
             >
               <option value="" disabled>Select a mission…</option>
               <template x-for="m in missionsList">
@@ -148,7 +172,7 @@
               name="office_address"
               x-model="officeAddress"
               placeholder="Office address"
-              :required="currentStep === 1"
+              :required="false /* currentStep === 1 */"
               disabled
             />
           </div>
@@ -159,13 +183,13 @@
               type="tel"
               name="office_phone"
               placeholder="e.g. +1 (801) 555-0199"
-              :required="currentStep === 1"
+              :required="false /* currentStep === 1 */"
             />
           </div>
 
           <div id="items-container">
             <template x-for="(item, index) in itemRows" :key="item.id">
-              <div class="form-group item-row">
+              <div class="form-group item-row" x-data="{ previews: [] }">
                 <label x-text="'Item ' + (index + 1) + ' Photos'"></label>
                 <div class="item-input-row">
                   <input
@@ -173,7 +197,13 @@
                     :name="'item_photo_' + item.id"
                     accept="image/*"
                     multiple
-                    :required="currentStep === 1 && index === 0"
+                    :required="false /* currentStep === 1 && index === 0*/"
+                    @change="
+            previews = Array.from($event.target.files).map(file => ({
+              id: crypto.randomUUID(),
+              url: URL.createObjectURL(file)
+            }))
+          "
                   />
                   <button
                     type="button"
@@ -185,6 +215,21 @@
                     <i class="fa-solid fa-trash-can"></i>
                   </button>
                 </div>
+
+                <!-- Multiple Items Preview Grid -->
+                <template x-if="previews.length > 0">
+                  <div class="preview-gallery grid-layout">
+                    <template x-for="pic in previews" :key="pic.id">
+                      <div class="preview-thumb-wrapper">
+                        <img
+                          :src="pic.url"
+                          class="preview-img-thumb"
+                          alt="Item Preview"
+                        />
+                      </div>
+                    </template>
+                  </div>
+                </template>
               </div>
             </template>
           </div>
@@ -203,7 +248,7 @@
               x-model="packageWeight"
               inputmode="numeric"
               placeholder="e.g. 25"
-              :required="currentStep === 1"
+              :required="false /* currentStep === 1 */"
             />
           </div>
 
@@ -257,7 +302,7 @@
               name="customer_email"
               x-model="customerEmail"
               placeholder="you@example.com"
-              :required="currentStep === 3"
+              :required="false /* currentStep === 3 */"
             />
           </div>
 

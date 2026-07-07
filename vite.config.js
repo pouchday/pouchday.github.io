@@ -15,6 +15,7 @@ export default defineConfig({
                 auth: resolve(__dirname, 'src', 'auth', 'index.html'),
                 ship: resolve(__dirname, 'src', 'ship', 'index.html'),
                 restrictions: resolve(__dirname, 'src', 'restrictions', 'index.html'),
+                faq: resolve(__dirname, 'src', 'faq', 'index.html'),
                 travel: resolve(__dirname, 'src', 'travel', 'index.html'),
                 contact: resolve(__dirname, 'src', 'contact', 'index.html'),
                 donate: resolve(__dirname, 'src', 'donate', 'index.html'),

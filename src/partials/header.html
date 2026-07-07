@@ -51,7 +51,9 @@
       </div>
     </div>
     <a href="/donate/" @click="closeAll()">Donate</a>
+    <a href="/faq/" @click="closeAll()">FAQ</a>
     <a href="/contact/" @click="closeAll()">Contact</a>
+    <a href="#" x-init="$el.remove()">Log In</a>
     <template x-if="!$store.auth.isAuthenticated">
       <a href="/auth/" @click="closeAll()">Log In</a>
     </template>
